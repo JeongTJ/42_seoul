@@ -6,7 +6,7 @@
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:03:52 by tajeong           #+#    #+#             */
-/*   Updated: 2024/01/05 19:56:24 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/01/05 21:10:40 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
-# define KEY_SUM 69
-# define KEY_SUB 78
+# define KEY_SUM 24
+# define KEY_SUB 27
 # define KEY_L_S_BRACKETS 33
 # define KEY_R_S_BRACKETS 53
 # define KEY_Z 6
