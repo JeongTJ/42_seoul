@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_utils1.c                                       :+:      :+:    :+:   */
+/*   fdf_utils_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:03:52 by tajeong           #+#    #+#             */
-/*   Updated: 2024/01/12 19:08:25 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/01/15 13:08:01 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/fdf.h"
+#include "../header_bonus/fdf_bonus.h"
 
 void	fdf_int_to_trgb(t_data *data)
 {
@@ -38,22 +38,6 @@ int	fdf_is_drawable(t_data data)
 {
 	return (0 <= data.x && data.x < WIDTH && \
 			0 <= data.y && data.y < HEIGHT);
-}
-
-void	fdf_rgb_init(t_data *data)
-{
-	while (data->r > 255.0)
-		data->r -= 255;
-	while (data->g > 255.0)
-		data->g -= 255;
-	while (data->b > 255.0)
-		data->b -= 255;
-	while (0 > data->r)
-		data->r += 255;
-	while (0 > data->g)
-		data->g += 255;
-	while (0 > data->b)
-		data->b += 255;
 }
 
 void	fdf_color_init(t_info *info)

@@ -6,7 +6,7 @@
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:03:52 by tajeong           #+#    #+#             */
-/*   Updated: 2024/01/11 16:35:15 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/01/14 19:04:36 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ static void	fdf_init_info_data(t_info *info)
 	{
 		col = 0;
 		one_line = ft_calloc(info->col_size, sizeof(t_data));
+		if (one_line == NULL)
+			exit(EXIT_FAILURE);
 		while (col < info->col_size)
 		{
 			one_line[col].y = row - info->row_size / 2;
@@ -82,8 +84,6 @@ static void	fdf_init_info_data(t_info *info)
 			one_line[col].color = 0x0;
 			col++;
 		}
-		if (one_line == NULL)
-			exit(EXIT_FAILURE);
 		info->data[row] = one_line;
 		row++;
 	}

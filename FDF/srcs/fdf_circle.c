@@ -6,7 +6,7 @@
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:03:52 by tajeong           #+#    #+#             */
-/*   Updated: 2024/01/12 18:52:06 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/01/17 15:29:52 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	fdf_circle(t_info *info)
 			gamma = ((360.0 / info->row_size) * (info->row_size / 2 - row)) \
 															/ 180.0 * M_PI;
 			fdf_rotate_beta(&info->rotate_data[row][col], beta);
+			info->rotate_data[row][col].x += info->col_size;
 			fdf_rotate_gamma(&info->rotate_data[row][col], gamma);
 			col++;
 		}

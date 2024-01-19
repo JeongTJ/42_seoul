@@ -31,19 +31,19 @@ all : $(NAME)
 re : fclean all
 
 fclean : clean
-	rm -rf $(NAME)
+	@ rm -rf $(NAME)
 
 clean :
-	rm -rf $(DEPS)
-	rm -rf $(OBJS) $(OBJS_BONUS) $(DEPS) $(DEPS_BONUS) libft.h.gch
+	@ rm -rf $(DEPS)
+	@ rm -rf $(OBJS) $(OBJS_BONUS) $(DEPS) $(DEPS_BONUS) libft.h.gch
 
 $(NAME) : $(OBJECTS)
-	ar rc $@ $(OBJECTS)
+	@ ar rc $@ $(OBJECTS)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@ $(CC) $(CFLAGS) -c $< -o $@
 
 bonus :
-	make WITH_BONUS=1 all
+	@ make WITH_BONUS=1 all
 
 .PHONY: all bonus clean fclean re

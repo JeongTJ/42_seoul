@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_rotate.c                                       :+:      :+:    :+:   */
+/*   fdf_rotate_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:03:52 by tajeong           #+#    #+#             */
-/*   Updated: 2024/01/12 14:54:30 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/01/15 13:07:59 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/fdf.h"
+#include "../header_bonus/fdf_bonus.h"
 
 void	fdf_rotate_alpha(t_data *rotate_data, double angle)
 {

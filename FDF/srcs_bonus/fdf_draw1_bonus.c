@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_draw1.c                                        :+:      :+:    :+:   */
+/*   fdf_draw1_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:03:52 by tajeong           #+#    #+#             */
-/*   Updated: 2024/01/11 13:49:47 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/01/15 13:07:43 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/fdf.h"
+#include "../header_bonus/fdf_bonus.h"
 
 void	my_mlx_pixel_put(t_image *image, int x, int y, int color)
 {

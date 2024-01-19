@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   fdf_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:03:52 by tajeong           #+#    #+#             */
-/*   Updated: 2024/01/15 18:30:00 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/01/16 16:38:04 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef FDF_BONUS_H
+# define FDF_BONUS_H
 # include "../mlx/mlx.h"
 # include "../libft/libft.h"
 # include <math.h>
 # include <fcntl.h>
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 400
+# define HEIGHT 400
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
@@ -82,9 +82,9 @@ typedef struct s_info
 {
 	t_vars	vars;
 	t_image	image;
-	t_data	**data; // 원본 데이터
-	t_data	**rotate_data; // 회전 데이터
-	t_data	**image_data; //
+	t_data	**data;
+	t_data	**rotate_data;
+	t_data	**image_data;
 	t_data	*axis;
 	t_data	*rotate_axis;
 	t_data	*image_axis;

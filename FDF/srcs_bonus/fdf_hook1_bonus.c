@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_hook1.c                                        :+:      :+:    :+:   */
+/*   fdf_hook1_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:03:52 by tajeong           #+#    #+#             */
-/*   Updated: 2024/01/12 19:03:42 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/01/15 13:07:47 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/fdf.h"
+#include "../header_bonus/fdf_bonus.h"
 
 static void	fdf_redraw(t_info *info)
 {

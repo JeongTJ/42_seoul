@@ -1,53 +1,64 @@
-SRCFILE =	fdf_main.c fdf_draw1.c fdf_draw2.c fdf_key_move.c fdf_parsing.c \
-			fdf_utils.c fdf_axis.c fdf_error.c fdf_rotate.c fdf_init.c \
-			fdf_hook1.c fdf_hook2.c fdf_box.c fdf_circle.c
-SRCS = $(addprefix ./srcs/,$(notdir $(SRCFILE)))
-BONUS_SRCS = $(addprefix ./srcs_bonus/,$(notdir $(SRCFILE)))
-OBJS = $(SRCS:.c=.o)
-BONUS_OBJS = $(BONUS_SRCS:.c=_bonus.o)
-
-HEADERS = fdf.h
+.DEFAULT_GOAL := all
+SRCS = fdf_main.c fdf_draw1.c fdf_draw2.c fdf_key_move.c fdf_parsing.c \
+		fdf_utils.c fdf_axis.c fdf_rotate.c fdf_init.c \
+		fdf_hook1.c fdf_hook2.c fdf_box.c fdf_circle.c
+SRCS_BONUS = $(SRCS:.c=_bonus.c)
+LIBFT_DIR = ./libft
+LIBFT_NAME = ft
+LIBFT = libft/libft.a
+OBJS = $(addprefix ./srcs/, $(SRCS:.c=.o))
+OBJS_BONUS = $(addprefix ./srcs_bonus/, $(SRCS_BONUS:.c=.o))
+DEPS = $(addprefix ./srcs/, $(SRCS:.c=.d))
+DEPS_BONUS = $(addprefix ./srcs_bonus/, $(SRCS_BONUS:.c=.d))
 HEADER_DIR = ./header
-LIBFT = ./libft/libft.a
+HEADER_BONUS_DIR = ./header_bonus
+CC = cc -Wall -Wextra -Werror -MMD -MP
+MLX = -L./mlx -lmlx -framework OpenGL -framework AppKit
 NAME = fdf
-MLX_DIR = mlx
+MANDA = .manda
+BONUS = .bonus
+-include $(DEPS)
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-MLX_FLAG = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
-
-
-ifdef WITH_BONUS
-	TARGET_OBJS = $(BONUS_OBJS)
-else
-	TARGET_OBJS = $(OBJS)
-endif
-
-all : $(NAME)
-
-re : fclean all
-
-fclean : clean
-	rm -rf $(NAME)
-
-clean :
-	make -C libft fclean
-	rm -rf $(OBJS)
-	rm -rf $(BONUS_OBJS)
-
-$(NAME) : $(LIBFT) $(TARGET_OBJS)
-	$(CC) $(CFLAGS) $(MLX_FLAG) -Llibft -lft $(TARGET_OBJS) -o $@
-
-%.o : %.c $(HEADER_DIR)/$(HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(LIBFT) :
-	make -C libft bonus
+all :
+	@echo "FDF : make $(NAME)"
+	@make $(MANDA)
 
 bonus :
-	make WITH_BONUS=1 all
+	@echo "FDF : make BONUS"
+	@make $(BONUS)
 
-k :
-	echo $(TARGET_OBJS)
+$(LIBFT) :
+	@ echo "FDF : make $(LIBFT)"
+	@ make -C $(LIBFT_DIR) bonus
 
-.PHONY: all bonus clean fclean re
+$(NAME) : $(LIBFT) $(OBJS)
+	@make $(MANDA)
+
+$(MANDA) : $(LIBFT) $(OBJS)
+	@rm -rf $(BONUS)
+	@touch $(MANDA)
+	@$(CC) -o $(NAME) $(OBJS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) -I$(HEADER_DIR) $(MLX)
+
+$(BONUS) : $(LIBFT) $(OBJS_BONUS)
+	@rm -rf $(MANDA)
+	@touch $(BONUS)
+	@$(CC) -o $(NAME) $(OBJS_BONUS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) -I$(HEADER_BONUS_DIR) $(MLX)
+
+%.o : %.c
+	@$(CC) -c $<  -I$(LIBFT_DIR) -o $@
+
+clean :
+	@echo "FDF : make clean"
+	@rm -f $(OBJS) $(DEPS) $(OBJS_BONUS) $(BONUS) $(MANDA) $(DEPS_BONUS)
+	@make -C $(LIBFT_DIR) clean
+
+fclean :
+	@echo "FDF : make fclean"
+	@rm -f $(OBJS) $(NAME) $(DEPS) $(OBJS_BONUS) $(BONUS) $(MANDA) $(DEPS_BONUS)
+	@make -C $(LIBFT_DIR) fclean
+
+re : fclean
+	@ echo "FDF : make re"
+	@make all
+
+.PHONY: all clean fclean re

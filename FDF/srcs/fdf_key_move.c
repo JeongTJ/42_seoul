@@ -6,7 +6,7 @@
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:03:52 by tajeong           #+#    #+#             */
-/*   Updated: 2024/01/12 15:26:11 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/01/14 17:07:16 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	fdf_key_move(int keycode, t_info *info, int movement)
 {
-	if (keycode == KEY_SUM)
+	if (info->zoom_level < 10 && keycode == KEY_SUM)
 		info->zoom_level++;
 	else if (info->zoom_level > 0 && keycode == KEY_SUB)
 		info->zoom_level--;
