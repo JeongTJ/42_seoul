@@ -6,7 +6,7 @@
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:03:52 by tajeong           #+#    #+#             */
-/*   Updated: 2023/12/29 20:54:58 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/01/03 18:58:04 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*pf_resize_str(t_save_print *res)
 }
 
 const char	*pf_put_convention(const char *str, \
-				t_save_print *res, va_list argptr)
+							t_save_print *res, va_list argptr)
 {
 	char const	flags[10] = "cspdiuxX%\0";
 
