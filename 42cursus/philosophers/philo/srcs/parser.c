@@ -6,7 +6,7 @@
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:23:33 by tajeong           #+#    #+#             */
-/*   Updated: 2024/02/17 02:50:00 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/02/20 16:28:01 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,21 @@ int	parse(int argc, char *argv[], t_info *info)
 	if (!isvalid_argv(argc, argv))
 		return (FALSE);
 	info->num_philo = ph_atoi(argv[1]);
-	if (info->num_philo < 0)
+	if (info->num_philo <= 0)
 		return (FALSE);
 	info->time_to_die = ph_atoi(argv[2]);
-	if (info->time_to_die < 0)
+	if (info->time_to_die <= 0)
 		return (FALSE);
 	info->time_to_eat = ph_atoi(argv[3]);
-	if (info->time_to_eat < 0)
+	if (info->time_to_eat <= 0)
 		return (FALSE);
 	info->time_to_sleep = ph_atoi(argv[4]);
-	if (info->time_to_sleep < 0)
+	if (info->time_to_sleep <= 0)
 		return (FALSE);
 	if (argc == 6)
 	{
 		info->must_eat = ph_atoi(argv[5]);
-		if (info->must_eat < 0)
+		if (info->must_eat <= 0)
 			return (FALSE);
 	}
 	else

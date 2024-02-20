@@ -6,7 +6,7 @@
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:23:33 by tajeong           #+#    #+#             */
-/*   Updated: 2024/02/17 02:45:02 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/02/20 14:45:41 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_info
 	int				is_one_die;
 	struct timeval	start_time;
 	struct timeval	now_time;
+	int				*fork_status;
 	pthread_mutex_t	*fork_list;
 	pthread_mutex_t	*print_mutex;
 	pthread_mutex_t	*is_one_die_mutex;

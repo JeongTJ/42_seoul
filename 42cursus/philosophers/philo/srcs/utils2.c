@@ -6,7 +6,7 @@
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:23:33 by tajeong           #+#    #+#             */
-/*   Updated: 2024/02/17 04:20:05 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/02/20 16:39:34 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*ph_calloc(size_t count, size_t size)
 	return (res);
 }
 
-void	info_clear(t_philo **philos, t_info *info)
+int	info_clear(t_philo **philos, t_info *info, int exit_code)
 {
 	int	idx;
 
@@ -42,6 +42,7 @@ void	info_clear(t_philo **philos, t_info *info)
 	free(info->fork_list);
 	free(info->print_mutex);
 	free(info->is_one_die_mutex);
+	return (exit_code);
 }
 
 void	loop_sleep(long long ms)
@@ -72,9 +73,8 @@ int	get_ms(t_info *info)
 
 void	ph_print(t_info *info, int idx, char *str)
 {
-	if (get_is_one_die(info) == TRUE)
-		return ;
 	pthread_mutex_lock(info->print_mutex);
-	printf("%d %d %s\n", get_ms(info), idx + 1, str);
+	if (get_is_one_die(info) == FALSE)
+		printf("%d %d %s\n", get_ms(info), idx + 1, str);
 	pthread_mutex_unlock(info->print_mutex);
 }

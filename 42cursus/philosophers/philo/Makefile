@@ -6,13 +6,14 @@ PHILO_SRCS = \
 			parser.c \
 			utils1.c \
 			utils2.c \
-			utils3.c
+			utils3.c \
+			utils4.c
 
 PHILO_OBJS = $(addprefix ./srcs/, $(PHILO_SRCS:.c=.o))
 OBJS = $(PHILO_OBJS)
 
 HEADER_DIR = ./header
-CC = cc -Wall -Wextra -Werror #-g -fsanitize=thread
+CC = cc -Wall -Wextra -Werror -g -fsanitize=thread
 NAME = philo
 
 all :
