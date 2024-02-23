@@ -21,7 +21,7 @@ MLX = mlx/libmlx.a
 MLX_NAME = mlx
 HEADER_DIR = ./include
 HEADER_BONUS_DIR = ./include_bonus
-CC = cc -Wall -Wextra -Werror
+CC = cc -Wall -Wextra -Werror -fsanitize=address -g
 NAME = miniRT
 MANDA = .manda
 BONUS = .bonus

@@ -6,7 +6,7 @@
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:48:18 by tajeong           #+#    #+#             */
-/*   Updated: 2024/02/22 08:24:32 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/02/23 14:37:36 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	check_sphere(t_list *node)
 {
-	t_sphere	*sphere;
+	t_entity	*sphere;
 
-	sphere = ((t_entity *)node->content)->content;
+	sphere = (t_entity *)node->content;
 	if (!(0 <= sphere->color.r && sphere->color.r <= 255))
 		error_manager("out of range in sphere R");
 	if (!(0 <= sphere->color.g && sphere->color.g <= 255))
@@ -27,9 +27,9 @@ void	check_sphere(t_list *node)
 
 void	check_plane(t_list *node)
 {
-	t_plane		*plane;
+	t_entity	*plane;
 
-	plane = ((t_entity *)node->content)->content;
+	plane = (t_entity *)node->content;
 	if (!(-1 <= plane->vec.x && plane->vec.x <= 1))
 		error_manager("out of range in plane vector x");
 	if (!(-1 <= plane->vec.y && plane->vec.y <= 1))
@@ -46,9 +46,9 @@ void	check_plane(t_list *node)
 
 void	check_cylinder(t_list *node)
 {
-	t_cylinder	*cylinder;
+	t_entity	*cylinder;
 
-	cylinder = ((t_entity *)node->content)->content;
+	cylinder = (t_entity *)node->content;
 	if (!(-1 <= cylinder->vec.x && cylinder->vec.x <= 1))
 		error_manager("out of range in cylinder vector x");
 	if (!(-1 <= cylinder->vec.y && cylinder->vec.y <= 1))

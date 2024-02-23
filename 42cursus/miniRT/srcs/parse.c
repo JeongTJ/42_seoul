@@ -6,7 +6,7 @@
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:48:18 by tajeong           #+#    #+#             */
-/*   Updated: 2024/02/22 08:19:46 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/02/23 14:52:17 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void	parsing(int fd, t_info *info)
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
-		oneline_parsing(line, info);
+		if (line[0] != '\n')
+			oneline_parsing(line, info);
 		free(line);
 	}
 	free(line);

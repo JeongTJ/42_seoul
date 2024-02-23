@@ -6,23 +6,11 @@
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:48:18 by tajeong           #+#    #+#             */
-/*   Updated: 2024/02/22 07:55:06 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/02/23 14:52:13 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-t_entity	*ft_entitynew(void *content, t_entity_type type)
-{
-	t_entity	*res;
-
-	res = ft_calloc(1, sizeof(t_entity));
-	if (!res)
-		return (NULL);
-	res->type = type;
-	res->content = content;
-	return (res);
-}
 
 int	get_decimal(char *str, int idx)
 {
@@ -65,24 +53,20 @@ void	ft_atod(char *str, int *idx, double *a, char *error_massage)
 
 void	oneline_parsing(char *line, t_info *info)
 {
-	t_list		*node;
-	t_entity	*content;
+	t_list	*node;
 
-	content = NULL;
+	node = NULL;
 	if (line[0] == 'A')
-		content = make_ambient(line);
+		node = make_ambient(line, 0);
 	else if (line[0] == 'C')
-		content = make_camera(line);
+		node = make_camera(line, 0);
 	else if (line[0] == 'L')
-		content = make_light(line);
+		node = make_light(line, 0);
 	else if (line[0] == 's' && line[1] == 'p')
-		content = make_sphere(line);
+		node = make_sphere(line, 0);
 	else if (line[0] == 'p' && line[1] == 'l')
-		content = make_plane(line);
+		node = make_plane(line, 0);
 	else if (line[0] == 'c' && line[1] == 'y')
-		content = make_cylinder(line);
-	node = ft_lstnew(content);
-	if (!node)
-		error_manager("malloc error");
+		node = make_cylinder(line, 0);
 	ft_lstadd_back(&info->entites, node);
 }

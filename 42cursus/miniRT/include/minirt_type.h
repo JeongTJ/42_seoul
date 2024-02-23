@@ -6,7 +6,7 @@
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:49:06 by tajeong           #+#    #+#             */
-/*   Updated: 2024/02/22 07:38:35 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/02/23 15:16:20 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,62 +102,33 @@ typedef struct s_color
 	double	b;
 }	t_color;
 
-typedef struct s_ambient
-{
-	t_color			color;
-	double			lighting_ratio;
-}	t_ambient;
-
-typedef struct s_camera
-{
-	t_coor			coor;
-	t_coor			vec;
-	double			fov;
-}	t_camera;
-
-typedef struct s_light
-{
-	t_coor			coor;
-	double			brightness_ratio;
-	t_color			color;
-}	t_light;
-
-typedef struct s_sphere
-{
-	t_coor			coor;
-	double			radius;
-	t_color			color;
-}	t_sphere;
-
-typedef struct s_plane
-{
-	t_coor			coor;
-	t_coor			vec;
-	t_color			color;
-}	t_plane;
-
-typedef struct s_cylinder
-{
-	t_coor			coor;
-	t_coor			vec;
-	double			radius;
-	double			height;
-	t_color			color;
-}	t_cylinder;
-
 typedef struct s_entity
 {
 	t_entity_type	type;
-	void			*content;
+	t_coor			coor;
+	t_coor			vec;
+	t_color			color;
+	double			radius;
+	double			height;
+	double			fov;
+	double			brightness_ratio;
+	double			lighting_ratio;
 }	t_entity;
 
 typedef struct s_info
 {
-	t_var	var;
-	t_image	image;
-	t_list	*entites;
-	int		height;
-	int		width;
+	t_var		var;
+	t_image		image;
+	t_list		*entites;
+	t_list		*ambient;
+	t_list		*camera;
+	t_list		*light;
+	int			height;
+	int			width;
+	double		**m_a;
+	double		**m_b;
+	double		**m_c;
 }	t_info;
+
 
 #endif

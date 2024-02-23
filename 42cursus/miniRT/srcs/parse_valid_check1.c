@@ -6,7 +6,7 @@
 /*   By: tajeong <tajeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:48:18 by tajeong           #+#    #+#             */
-/*   Updated: 2024/02/22 07:58:24 by tajeong          ###   ########.fr       */
+/*   Updated: 2024/02/23 14:37:40 by tajeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	check_ambient(t_list *node)
 {
-	t_ambient	*ambient;
+	t_entity	*ambient;
 
-	ambient = ((t_entity *)node->content)->content;
+	ambient = (t_entity *)node->content;
 	if (!(0 <= ambient->color.r && ambient->color.r <= 255))
 		error_manager("out of range in ambient R");
 	if (!(0 <= ambient->color.g && ambient->color.g <= 255))
@@ -29,9 +29,9 @@ void	check_ambient(t_list *node)
 
 void	check_camera(t_list *node)
 {
-	t_camera	*camera;
+	t_entity	*camera;
 
-	camera = ((t_entity *)node->content)->content;
+	camera = (t_entity *)node->content;
 	if (!(-1 <= camera->vec.x && camera->vec.x <= 1))
 		error_manager("out of range in camera vector x");
 	if (!(-1 <= camera->vec.y && camera->vec.y <= 1))
@@ -44,9 +44,9 @@ void	check_camera(t_list *node)
 
 void	check_light(t_list *node)
 {
-	t_light		*light;
+	t_entity		*light;
 
-	light = ((t_entity *)node->content)->content;
+	light = (t_entity *)node->content;
 	if (!(0 <= light->brightness_ratio && light->brightness_ratio <= 1))
 		error_manager("out of range in light brightness_ratio");
 	if (!(0 <= light->color.r && light->color.r <= 255))
