@@ -14,9 +14,8 @@
 
 int	builtin_env(int argc, char **argv, t_list *env, char *prompt)
 {
-	argc = 0;
-	argv = NULL;
-	prompt = NULL;
+	if (argc == 0 && argv == NULL && prompt == NULL)
+		;
 	env = env->next;
 	while (env != NULL)
 	{

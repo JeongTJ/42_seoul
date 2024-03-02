@@ -18,10 +18,11 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_list	*env;
 
+	if (argv[1] != NULL)
+		return (0);
 	init_minishell();
 	if (argc != 1)
 		return (0);
-	argv = NULL;
 	env = get_env_list(envp);
 	loop_shell(env);
 	exit(0);

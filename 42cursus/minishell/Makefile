@@ -87,7 +87,7 @@ $(NAME) : $(LIBFT) $(OBJS)
 $(MANDA) : $(LIBFT) $(OBJS)
 	@rm -rf $(BONUS)
 	@touch $(MANDA)
-	@$(CC) -o $(NAME) $(OBJS) -l$(READLINE) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) -I$(HEADER_DIR)
+	@$(CC) -o $(NAME) $(OBJS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) -I$(HEADER_DIR) -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline
 
 $(BONUS) : $(LIBFT) $(OBJS_BONUS)
 	@rm -rf $(MANDA)
@@ -95,10 +95,10 @@ $(BONUS) : $(LIBFT) $(OBJS_BONUS)
 	@$(CC) -o $(NAME) $(OBJS_BONUS) -l$(READLINE) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) -I$(HEADER_BONUS_DIR)
 
 %_bonus.o : %_bonus.c
-	@$(CC) -c $< -I$(LIBFT_DIR) -I$(HEADER_BONUS_DIR) -o $@
+	@$(CC) -c $< -I/opt/homebrew/opt/readline/include -I$(LIBFT_DIR) -I$(HEADER_BONUS_DIR) -o $@
 
 %.o : %.c
-	@$(CC) -c $< -I$(LIBFT_DIR) -I$(HEADER_DIR) -o $@
+	@$(CC) -c $< -I/opt/homebrew/opt/readline/include -I$(LIBFT_DIR) -I$(HEADER_DIR) -o $@
 
 clean :
 	@echo "minishell : make clean"
