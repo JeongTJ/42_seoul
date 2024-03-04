@@ -12,7 +12,7 @@ DEPS = $(addprefix ./srcs/, $(SRCS:.c=.d))
 DEPS_BONUS = $(addprefix ./srcs_bonus/, $(SRCS_BONUS:.c=.d))
 HEADER_DIR = ./header
 HEADER_BONUS_DIR = ./header_bonus
-CC = cc -Wall -Wextra -Werror -MMD -MP -O3
+CC = cc -Wall -Wextra -Werror -O3
 MLX = -L./mlx -lmlx -framework OpenGL -framework AppKit
 NAME = fdf
 MANDA = .manda

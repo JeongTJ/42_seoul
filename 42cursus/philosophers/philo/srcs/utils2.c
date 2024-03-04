@@ -67,14 +67,14 @@ int	get_ms(t_info *info)
 	struct timeval	now_time;
 
 	gettimeofday(&now_time, NULL);
-	return ((now_time.tv_sec - info->start_time.tv_sec) * 1000 + \
-			(now_time.tv_usec - info->start_time.tv_usec) / 1000);
+	return ((now_time.tv_sec - info->start_time.tv_sec) * 1000000 + \
+			(now_time.tv_usec - info->start_time.tv_usec));
 }
 
 void	ph_print(t_info *info, int idx, char *str)
 {
 	pthread_mutex_lock(info->print_mutex);
 	if (get_is_one_die(info) == FALSE)
-		printf("%d %d %s\n", get_ms(info), idx + 1, str);
+		printf("%d %d %s\n", get_ms(info) / 1000, idx + 1, str);
 	pthread_mutex_unlock(info->print_mutex);
 }

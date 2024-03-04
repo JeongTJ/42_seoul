@@ -64,7 +64,7 @@ LIBFT = libft/libft.a
 HEADER_DIR = ./header
 HEADER_BONUS_DIR = ./header_bonus
 READLINE = readline
-CC = cc -Wall -Wextra -Werror #-fsanitize=address -g3
+CC = cc -Wall -Wextra -Werror
 NAME = minishell
 MANDA = .manda
 BONUS = .bonus

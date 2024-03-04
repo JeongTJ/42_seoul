@@ -33,6 +33,7 @@ void	fdf_shape(t_info *info)
 			gamma = ((360.0 / info->row_size) * (info->row_size / 2 - row)) \
 															/ 180.0 * M_PI;
 			fdf_rotate_beta(&info->rotate_data[row][col], beta);
+			info->rotate_data[row][col].x += info->col_size;
 			fdf_rotate_gamma(&info->rotate_data[row][col], gamma);
 			col++;
 		}

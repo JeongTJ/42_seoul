@@ -17,8 +17,8 @@
 # include <math.h>
 # include <fcntl.h>
 
-# define WIDTH 1000
-# define HEIGHT 800
+# define WIDTH 1600
+# define HEIGHT 900
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2

@@ -16,7 +16,7 @@ void	ph_print_died(t_info *info, int idx)
 {
 	pthread_mutex_lock(info->print_mutex);
 	set_is_one_die(info, TRUE);
-	printf("%d %d %s\n", get_ms(info), idx + 1, "died");
+	printf("%d %d %s\n", get_ms(info) / 1000, idx + 1, "died");
 	pthread_mutex_unlock(info->print_mutex);
 }
 
@@ -47,7 +47,7 @@ void	main_loop(t_philo **philos, t_info *info)
 							get_eat_cnt(&(*philos)[idx]) >= info->must_eat)
 				eat_done++;
 			if (get_ms(info) - get_last_eat(&(*philos)[idx]) \
-									> info->time_to_die)
+									> info->time_to_die * 1000)
 			{
 				ph_print_died(info, idx);
 				break ;
@@ -64,7 +64,7 @@ int	main(int argc, char *argv[])
 	t_info	info;
 	t_philo	*philos;
 
-	info.is_one_die = FALSE;
+	memset(&info, 0, sizeof(t_info));
 	if (!parse(argc, argv, &info))
 		return (1);
 	gettimeofday(&(info.start_time), NULL);
