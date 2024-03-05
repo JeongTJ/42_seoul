@@ -5,11 +5,11 @@ SRCS := \
 
 OBJS := $(SRCS:.cpp=.o)
 INCLUDE :=
-CPP := g++ 
-FLAGS := -Wall -Werror -Wextra -std=c++98
+CXX := g++ 
+CXXFLAGS := -Wall -Werror -Wextra -std=c++98
 NAME := phonebook
 
-SUBJECTNAME := "cpp_module_00_ex00"
+SUBJECTNAME := "cpp_module_00_ex01"
 RED := \033[31m
 GREEN := \033[32m
 BLUE := \033[34m
@@ -25,10 +25,10 @@ re : fclean all
 	@ echo "[$(BLUE)$(SUBJECTNAME)$(WHITE)] $(GREEN)make re$(WHITE)"
 
 $(NAME) : $(OBJS)
-	@ $(CPP) $(FLAGS) $^ -o $@
+	@ $(CXX) $(CXXFLAGS) $^ -o $@
 
 %.o : %.cpp
-	@ $(CPP) $(FLAGS) -c $^ -I. -o $@
+	@ $(CXX) $(CXXFLAGS) -c $^ -I. -o $@
 
 fclean :
 	@ echo "[$(BLUE)$(SUBJECTNAME)$(WHITE)] $(GREEN)make fclean$(WHITE)"

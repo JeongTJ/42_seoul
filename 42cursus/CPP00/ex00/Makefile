@@ -3,8 +3,8 @@ SRCS := \
 
 OBJS := $(SRCS:.cpp=.o)
 INCLUDE :=
-CPP := g++ 
-FLAGS := -Wall -Werror -Wextra -std=c++98
+CXX := g++ 
+CXXFLAGS := -Wall -Werror -Wextra -std=c++98
 NAME := megaphone
 
 SUBJECTNAME := "cpp_module_00_ex01"
@@ -23,10 +23,10 @@ re : fclean all
 	@ echo "[$(BLUE)$(SUBJECTNAME)$(WHITE)] $(GREEN)make re$(WHITE)"
 
 $(NAME) : $(OBJS)
-	@ $(CPP) $(FLAGS) $^ -o $@
+	@ $(CXX) $(CXXFLAGS) $^ -o $@
 
 %.o : %.cpp
-	@ $(CPP) $(FLAGS) -c $^ -o $@
+	@ $(CXX) $(CXXFLAGS) -c $^ -o $@
 
 fclean :
 	@ echo "[$(BLUE)$(SUBJECTNAME)$(WHITE)] $(GREEN)make fclean$(WHITE)"
