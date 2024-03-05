@@ -8,7 +8,7 @@ int main(void) {
 	std::string cmd;
 
 	while (!std::cin.eof()) {
-		std::cout << "Please input (ADD, SEARCH, EXIT)" << std::endl;
+		std::cout << "Please input (ADD, SEARCH, or EXIT)" << std::endl;
 		std::getline(std::cin, cmd);
 		if (cmd.compare("ADD") == 0)
 			phonebook.saveContact();
