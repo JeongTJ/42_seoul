@@ -48,6 +48,7 @@ void	loop_shell(t_list *env)
 	t_info	info;
 	char	*str;
 
+	memset(&info, 0, sizeof(t_info));
 	info.env = env;
 	while (1)
 	{
