@@ -7,8 +7,7 @@ int	Account::_totalNbDeposits = 0;
 int	Account::_totalNbWithdrawals = 0;
 
 void Account::_displayTimestamp( void ) {
-	// std::cout << "[20240306_194400] ";
-	std::cout << "[19920104_091532] ";
+	std::cout << "[20240306_194400] ";
 }
 
 int	Account::getNbAccounts( void ) {

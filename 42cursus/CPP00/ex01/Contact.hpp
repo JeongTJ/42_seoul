@@ -1,11 +1,14 @@
 #pragma once
+#ifndef CONTACT_HPP
+#define CONTACT_HPP
+
 #include <string>
 
 class Contact{
 	public:
-		Contact(void);
-		void putInfo(void);
-		void printInfo(void);
+		Contact( void );
+		void putInfo( void );
+		void printInfo( void );
 	private:
 		std::string firstName;
 		std::string lastName;
@@ -13,3 +16,5 @@ class Contact{
 		std::string phoneNumber;
 		std::string darkestSecret;
 };
+
+#endif
