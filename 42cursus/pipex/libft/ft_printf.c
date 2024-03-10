@@ -122,11 +122,11 @@ int	ft_printf(const char *str, ...)
 	while (*str != '\0')
 	{
 		str = pf_not_convention(str, res);
-		if (str == NULL)
-			return ((int)pf_error_manager(res, 1) - 1);
+		// if (str == NULL)
+		// 	return ((int)pf_error_manager(res, 1) - 1);
 		str = pf_put_convention(str, res, argptr);
-		if (str == NULL)
-			return ((int)pf_error_manager(res, 1) - 1);
+		// if (str == NULL)
+		// 	return ((int)pf_error_manager(res, 1) - 1);
 	}
 	va_end(argptr);
 	tmp = write(1, res->str, res->len);
