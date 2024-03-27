@@ -87,7 +87,7 @@ $(NAME) : $(LIBFT) $(OBJS)
 $(MANDA) : $(LIBFT) $(OBJS)
 	@rm -rf $(BONUS)
 	@touch $(MANDA)
-	@$(CC) -o $(NAME) $(OBJS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) -I$(HEADER_DIR) -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include -lreadline
+	@$(CC) -o $(NAME) $(OBJS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) -I$(HEADER_DIR) -L/opt/homebrew/opt/readline/lib -lreadline
 
 $(BONUS) : $(LIBFT) $(OBJS_BONUS)
 	@rm -rf $(MANDA)
