@@ -70,6 +70,7 @@ MANDA = .manda
 BONUS = .bonus
 
 all :
+	@ make -C $(LIBFT_DIR) bonus
 	@echo "minishell : make $(NAME)"
 	@make $(MANDA)
 
@@ -77,7 +78,7 @@ bonus :
 	@echo "minishell : make BONUS"
 	@make $(BONUS)
 
-$(LIBFT) :
+$(LIBFT) : 
 	@ echo "minishell : make $(LIBFT)"
 	@ make -C $(LIBFT_DIR) bonus
 
@@ -87,7 +88,7 @@ $(NAME) : $(LIBFT) $(OBJS)
 $(MANDA) : $(LIBFT) $(OBJS)
 	@rm -rf $(BONUS)
 	@touch $(MANDA)
-	@$(CC) -o $(NAME) $(OBJS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) -I$(HEADER_DIR) -L/opt/homebrew/opt/readline/lib -lreadline
+	@$(CC) -o $(NAME) $(OBJS) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) -I$(HEADER_DIR) -lreadline
 
 $(BONUS) : $(LIBFT) $(OBJS_BONUS)
 	@rm -rf $(MANDA)
@@ -95,10 +96,10 @@ $(BONUS) : $(LIBFT) $(OBJS_BONUS)
 	@$(CC) -o $(NAME) $(OBJS_BONUS) -l$(READLINE) -l$(LIBFT_NAME) -L$(LIBFT_DIR) -I$(LIBFT_DIR) -I$(HEADER_BONUS_DIR)
 
 %_bonus.o : %_bonus.c
-	@$(CC) -c $< -I/opt/homebrew/opt/readline/include -I$(LIBFT_DIR) -I$(HEADER_BONUS_DIR) -o $@
+	@$(CC) -c $< -I$(LIBFT_DIR) -I$(HEADER_BONUS_DIR) -o $@
 
 %.o : %.c
-	@$(CC) -c $< -I/opt/homebrew/opt/readline/include -I$(LIBFT_DIR) -I$(HEADER_DIR) -o $@
+	@$(CC) -c $< -I$(LIBFT_DIR) -I$(HEADER_DIR) -o $@
 
 clean :
 	@echo "minishell : make clean"

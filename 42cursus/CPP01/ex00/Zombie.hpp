@@ -6,7 +6,7 @@
 
 class Zombie{
 	public:
-		Zombie( std::string );
+		Zombie( std::string name );
 		~Zombie( void );
 		void announce( void );
 	private:
@@ -17,5 +17,3 @@ Zombie* newZombie( std::string name );
 void randomChump( std::string name );
 
 #endif
-
-Makefile, main.cpp, Zombie.{h, hpp}, Zombie.cpp, ZombieHorde.cpp
