@@ -6,9 +6,9 @@ Zombie::Zombie( std::string name ) {
 }
 
 Zombie::~Zombie( void ) {
-	std::cout << this->name << " delete" << std::endl;
+	std::cout << name << " delete" << std::endl;
 }
 
 void Zombie::announce( void ) {
-	std::cout << this->name << " : BraiiiiiiinnnzzzZ..." << std::endl;
+	std::cout << name << " : BraiiiiiiinnnzzzZ..." << std::endl;
 }

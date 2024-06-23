@@ -17,3 +17,5 @@ Zombie* newZombie( std::string name );
 void randomChump( std::string name );
 
 #endif
+
+Makefile, main.cpp, Zombie.{h, hpp}, Zombie.cpp, ZombieHorde.cpp
