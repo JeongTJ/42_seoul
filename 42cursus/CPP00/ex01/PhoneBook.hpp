@@ -3,14 +3,14 @@
 #define PHONEBOOK_HPP
 
 #include "Contact.hpp"
-#define LAST_IDX 7
+#define MAX_SIZE 8
 
 class PhoneBook{
 	public:
 		PhoneBook( void );
 		void saveContact( void );
 		void printAllContact( void );
-		void printContact( int idx );
+		void printContactDetail( void );
 	private:
 		Contact contacts[8];
 		int size;

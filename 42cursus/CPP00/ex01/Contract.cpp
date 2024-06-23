@@ -2,7 +2,7 @@
 #include <iomanip>
 #include "Contact.hpp"
 
-Contact::Contact(){
+Contact::Contact( void ){
 	firstName = "";
 	lastName = "";
 	nickName = "";
@@ -10,100 +10,45 @@ Contact::Contact(){
 	darkestSecret = "";
 }
 
-void Contact::putInfo() {
+void Contact::putInfo( void ) {
 	std::string tmp = "";
-	while (!std::cin.eof()) {
-		std::cout << "Put your first_name: ";
-		std::getline(std::cin, tmp);
+	std::string *field[5] = {&firstName, &lastName, &nickName, &phoneNumber, &darkestSecret};
+	std::string fieldName[5] = {"first_name", "last_name", "nick_name", "phone_number", "darkest_necret"};
+	for (int i = 0; i < 5; i++) {
+		while (!std::cin.eof()) {
+			std::cout << "Put your " << fieldName[i] << ": ";
+			std::getline(std::cin, tmp);
 
-		if (std::cin.eof())
-			break ;
-		if (tmp.empty()) {
-			std::cout << "Please input a non-empty string." << std::endl;
-		} else {
-			break;
-		} 
+			if (std::cin.eof())
+				break ;
+			if (tmp.empty())
+				std::cout << ERROR_MSG << std::endl;
+			else
+				break;
+		}
+		*field[i] = tmp;
+		tmp = "";
 	}
-	firstName = tmp;
-	tmp = "";
-	while (!std::cin.eof()) {
-		std::cout << "Put your last_name: ";
-		std::getline(std::cin, tmp);
-
-		if (std::cin.eof())
-			break ;
-		if (tmp.empty()) {
-			std::cout << "Please input a non-empty string." << std::endl;
-		} else {
-			break;
-		} 
-	}
-	lastName = tmp;
-	tmp = "";
-	while (!std::cin.eof()) {
-		std::cout << "Put your nick_name: ";
-		std::getline(std::cin, tmp);
-
-		if (std::cin.eof())
-			break ;
-		if (tmp.empty()) {
-			std::cout << "Please input a non-empty string." << std::endl;
-		} else {
-			break;
-		} 
-	}
-	nickName = tmp;
-	tmp = "";
-	while (!std::cin.eof()) {
-		std::cout << "Put your phone_number: ";
-		std::getline(std::cin, tmp);
-
-		if (std::cin.eof())
-			break ;
-		if (tmp.empty()) {
-			std::cout << "Please input a non-empty string." << std::endl;
-		} else {
-			break;
-		} 
-	}
-	phoneNumber = tmp;
-	tmp = "";
-	while (!std::cin.eof()) {
-		std::cout << "Put your darkest_secret: ";
-		std::getline(std::cin, tmp);
-
-		if (std::cin.eof())
-			break ;
-		if (tmp.empty()) {
-			std::cout << "Please input a non-empty string." << std::endl;
-		} else {
-			break;
-		} 
-	}
-	darkestSecret = tmp;
-	tmp = "";
 }
 
-void Contact::printInfo() {
+void Contact::printInfo( void ) {
 	std::string tmp = "";
-	
-	tmp = this->firstName;
-	if (this->firstName.length() > 10)
-		tmp = this->firstName.substr(0, 9) + ".";
-	std::cout << std::right << std::setw(10) << tmp << '|';
+	std::string *field[4] = {&firstName, &lastName, &nickName, &phoneNumber};
+	for (int i = 0; i < 4; i++) {
+		tmp = *field[i];
+		if (tmp.length() > 10)
+			tmp = (*field[i]).substr(0, 9) + ".";
+		std::cout << std::right << std::setw(10) << tmp;
+		if (i == 3)
+			std::cout << std::endl;
+		else
+			std::cout << '|';
+	}
+}
 
-	tmp = this->lastName;
-	if (this->lastName.length() > 10)
-		tmp = this->lastName.substr(0, 9) + ".";
-	std::cout << std::right << std::setw(10) << tmp << '|';
-
-	tmp = this->nickName;
-	if (this->nickName.length() > 10)
-		tmp = this->nickName.substr(0, 9) + ".";
-	std::cout << std::right << std::setw(10) << tmp << '|';
-
-	tmp = this->phoneNumber;
-	if (this->phoneNumber.length() > 10)
-		tmp = this->phoneNumber.substr(0, 9) + ".";
-	std::cout << std::right << std::setw(10) << tmp << std::endl;
+void Contact::printInfoDetail( void ) {
+	std::string *field[5] = {&firstName, &lastName, &nickName, &phoneNumber, &darkestSecret};
+	std::string fieldName[5] = {"first_name", "last_name", "nick_name", "phone_number", "darkest_necret"};
+	for (int i = 0; i < 5; i++)
+		std::cout << fieldName[i] << ": " << *field[i] << std::endl;
 }
