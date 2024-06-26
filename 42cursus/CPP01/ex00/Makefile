@@ -6,9 +6,9 @@ SRCS := \
 
 OBJS := $(SRCS:.cpp=.o)
 INCLUDE :=
-CXX := g++ 
+CXX := g++
 CXXFLAGS := -Wall -Werror -Wextra -std=c++98
-NAME := zombie
+NAME := CPP01_ex00
 
 SUBJECTNAME := "cpp_module_01_ex00"
 RED := \033[31m
