@@ -1,8 +1,12 @@
 SRCS := \
-	main.cpp
+	main.cpp \
+	HumanA.cpp \
+	HumanB.cpp \
+	Weapon.cpp
 
 OBJS := $(SRCS:.cpp=.o)
-INCLUDE :=
+INCLUDE := .
+
 CXX := g++
 CXXFLAGS := -Wall -Werror -Wextra -std=c++98
 NAME := CPP01_ex03
@@ -26,7 +30,7 @@ $(NAME) : $(OBJS)
 	@ $(CXX) $(CXXFLAGS) $^ -o $@
 
 %.o : %.cpp
-	@ $(CXX) $(CXXFLAGS) -c $^ -I. -o $@
+	@ $(CXX) $(CXXFLAGS) -c $^ -I$(INCLUDE) -o $@
 
 fclean :
 	@ echo "[$(BLUE)$(SUBJECTNAME)$(WHITE)] $(GREEN)make fclean$(WHITE)"

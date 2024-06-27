@@ -1,11 +1,19 @@
 #include "Zombie.hpp"
 
-int main( void ) {
+void zombieArea(Zombie **bZombie) {
 	Zombie aZombie("nameA");
-	Zombie* bZombie = newZombie("nameB");
-
+	*bZombie = newZombie("nameB");
 	aZombie.announce();
-	bZombie->announce();
+	(*bZombie)->announce();
+}
+
+int main( void ) {
+	Zombie* bZombie;
+
+	zombieArea(&bZombie);
+
+	randomChump("randomZombie");
+
 	delete bZombie;
 	return (0);
 }

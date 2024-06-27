@@ -4,7 +4,8 @@ SRCS := \
 	Zombie.cpp
 
 OBJS := $(SRCS:.cpp=.o)
-INCLUDE :=
+INCLUDE := .
+
 CXX := g++
 CXXFLAGS := -Wall -Werror -Wextra -std=c++98
 NAME := CPP01_ex01
@@ -28,7 +29,7 @@ $(NAME) : $(OBJS)
 	@ $(CXX) $(CXXFLAGS) $^ -o $@
 
 %.o : %.cpp
-	@ $(CXX) $(CXXFLAGS) -c $^ -I. -o $@
+	@ $(CXX) $(CXXFLAGS) -c $^ -I$(INCLUDE) -o $@
 
 fclean :
 	@ echo "[$(BLUE)$(SUBJECTNAME)$(WHITE)] $(GREEN)make fclean$(WHITE)"
