@@ -87,10 +87,16 @@ Fixed Fixed::operator++( int ) {
 }
 
 Fixed Fixed::operator--( int ) {
-	Fixed tmp(this->toFloat());
+	Fixed tmp(*this);
 
 	this->rawBits--;
 	return (tmp);
+}
+
+Fixed Fixed::operator-( void ) {
+	Fixed tmp(*this);
+
+	return (tmp * Fixed(-1));
 }
 
 Fixed &Fixed::max( Fixed &a, Fixed &b ) {
@@ -115,6 +121,14 @@ const Fixed &Fixed::min( const Fixed &a, const Fixed &b ) {
 	if (a <= b)
 		return a;
 	return b;
+}
+
+const Fixed Fixed::absF( const Fixed &a ) {
+	Fixed tmp(a);
+
+	if (tmp < 0)
+		return -tmp;
+	return tmp;
 }
 
 int Fixed::getRawBits( void ) const {

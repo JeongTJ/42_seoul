@@ -1,14 +1,16 @@
 SRCS := \
 	main.cpp \
-	Fixed.cpp
+	Fixed.cpp \
+	Point.cpp \
+	bsp.cpp
 
 OBJS := $(SRCS:.cpp=.o)
 INCLUDE := .
 CXX := g++
 CXXFLAGS := -Wall -Werror -Wextra -std=c++98
-NAME := CPP02_ex02
+NAME := CPP02_ex03
 
-SUBJECTNAME := "cpp_module_02_ex02"
+SUBJECTNAME := "cpp_module_02_ex03"
 RED := \033[31m
 GREEN := \033[32m
 BLUE := \033[34m

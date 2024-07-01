@@ -8,11 +8,9 @@ Fixed::Fixed( void ) {
 
 Fixed::~Fixed( void ) {
 	std::cout << "Destructor called" << std::endl;
-	rawBits = 0;
-	fractionalBits = 8;
 }
 
-Fixed &Fixed::operator=( const Fixed& fixed ) {
+Fixed &Fixed::operator=( const Fixed &fixed ) {
 	std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &fixed) {
 		this->rawBits = fixed.rawBits;
@@ -21,7 +19,7 @@ Fixed &Fixed::operator=( const Fixed& fixed ) {
 	return *this;
 }
 
-Fixed::Fixed( const Fixed& fixed ) {
+Fixed::Fixed( const Fixed &fixed ) {
 	std::cout << "Copy constructor called" << std::endl;
 	*this = fixed;
 }

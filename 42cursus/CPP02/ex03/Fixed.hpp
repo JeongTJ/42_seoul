@@ -4,7 +4,6 @@
 
 # include <iostream>
 # include <cmath>
-# include <iomanip>
 
 class Fixed {
 	public:
@@ -33,6 +32,8 @@ class Fixed {
 		Fixed operator++( int );
 		Fixed operator--( int );
 
+		Fixed operator-( void );
+
 		int getRawBits( void ) const;
 		void setRawBits( int const rawBits );
 		float toFloat( void ) const;
@@ -42,7 +43,7 @@ class Fixed {
 		static const Fixed &max( const Fixed &a, const Fixed &b );
 		static Fixed &min( Fixed &a, Fixed &b );
 		static const Fixed &min( const Fixed &a, const Fixed &b );
-
+		static const Fixed absF( const Fixed &a );
 	private:
 		int rawBits;
 		short fractionalBits;
