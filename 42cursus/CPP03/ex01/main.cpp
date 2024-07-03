@@ -1,17 +1,15 @@
-#include "FragTrap.hpp"
+#include "ClapTrap.hpp"
+#include "ScavTrap.hpp"
 
 int main( void ) {
-	FragTrap a("A"), b("B");
+	ScavTrap a("A");
+	ScavTrap b;
+	ClapTrap c;
+	b = b;
+	c = a;
+	a.attack("ScavTrap target");
+	b.attack("ClapTrap target");
 
-	a.attack("B");
-	a.takeDamage(1);
-	a.takeDamage(2);
-	a.takeDamage(3);
-	a.takeDamage(3);
-	a.beRepaired(4);
-	a.takeDamage(3);
-	a.takeDamage(3);
-	a.attack("B");
-	a.takeDamage(3);
+
 	return 0;
 }
