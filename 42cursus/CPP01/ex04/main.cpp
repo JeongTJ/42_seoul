@@ -15,7 +15,7 @@ std::string getReplaceStr(std::string curr, std::string &s1, std::string &s2)
 		}
 		res.append(curr.substr(oldp, newp - oldp));
 		res.append(s2);
-		oldp = newp + s1.size(); 
+		oldp = newp + s1.size();
 	}
 	return (res);
 }
@@ -51,13 +51,13 @@ int main( int argc, char *argv[] ) {
 		return (1);
 	}
 
-	readFile.open(fileName);
+	readFile.open(fileName.c_str());
 	if (!readFile.is_open()) {
 		std::cout << "readFile open failed" << std::endl;
 		return (1);
 	}
 
-	writeFile.open(fileName + ".replace", std::ios_base::trunc);
+	writeFile.open((fileName + ".replace").c_str(), std::ios_base::trunc);
 	if (!writeFile.is_open()) {
 		readFile.close();
 		std::cout << "writeFile open failed" << std::endl;

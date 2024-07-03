@@ -6,7 +6,7 @@ SRCS := \
 
 OBJS := $(SRCS:.cpp=.o)
 INCLUDE := .
-CXX := g++
+CXX := c++
 CXXFLAGS := -Wall -Werror -Wextra -std=c++98
 NAME := CPP02_ex03
 

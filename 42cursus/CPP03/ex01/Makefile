@@ -1,16 +1,15 @@
 SRCS := \
 	main.cpp \
-	newZombie.cpp \
-	randomChump.cpp \
-	Zombie.cpp
+	ClapTrap.cpp \
+	ScavTrap.cpp
 
 OBJS := $(SRCS:.cpp=.o)
 INCLUDE := .
 CXX := c++
 CXXFLAGS := -Wall -Werror -Wextra -std=c++98
-NAME := CPP01_ex00
+NAME := CPP03_ex01
 
-SUBJECTNAME := "cpp_module_01_ex00"
+SUBJECTNAME := "cpp_module_03_ex01"
 RED := \033[31m
 GREEN := \033[32m
 BLUE := \033[34m
