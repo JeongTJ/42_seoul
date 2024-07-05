@@ -2,13 +2,13 @@
 
 Point::Point(void): x(0), y(0) { }
 
-Point::Point( Fixed x, Fixed y ): x(x), y(y) { }
+Point::Point(Fixed x, Fixed y): x(x), y(y) { }
 
-Point::~Point( void ) { }
+Point::~Point(void) { }
 
-Point::Point( const Point &other ): x(other.x), y(other.y) { }
+Point::Point(const Point &other): x(other.x), y(other.y) { }
 
-Point &Point::operator=( const Point &other ) {
+Point &Point::operator=(const Point &other) {
 	if (this != &other) {
 		this->x = other.x;
 		this->y = other.y;

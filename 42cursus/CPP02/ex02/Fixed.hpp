@@ -8,7 +8,7 @@
 
 class Fixed {
 	public:
-		Fixed(void );
+		Fixed(void);
 		Fixed(int const num);
 		Fixed(float const num);
 		~Fixed(void);
