@@ -24,12 +24,18 @@ void Harl::complain( std::string level ) {
 			break ;
 		case 0:
 			(this->*f[0])();
+			// FALLTHROUGH
 		case 1:
 			(this->*f[1])();
+			// FALLTHROUGH
 		case 2:
 			(this->*f[2])();
+			// FALLTHROUGH
 		case 3:
 			(this->*f[3])();
+			// FALLTHROUGH
+		default:
+			break ;
 	}
 }
 
