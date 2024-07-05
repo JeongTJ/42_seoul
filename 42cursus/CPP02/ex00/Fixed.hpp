@@ -6,15 +6,15 @@
 
 class Fixed {
 	public:
-		Fixed( void );
-		~Fixed( void );
-		Fixed( const Fixed &fixed );
-		Fixed &operator=( const Fixed &fixed );
-		int getRawBits( void ) const;
-		void setRawBits( int const rawBits );
+		Fixed(void);
+		~Fixed(void);
+		Fixed(const Fixed &fixed);
+		Fixed &operator=(const Fixed &fixed);
+		int getRawBits(void) const;
+		void setRawBits(int const rawBits);
 	private:
-		int rawBits;
 		short fractionalBits;
+		int rawBits;
 
 };
 

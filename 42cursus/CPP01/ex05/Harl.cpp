@@ -1,11 +1,11 @@
 #include "Harl.hpp"
 
 Harl::Harl( void ) {
-	this->f[0] = &Harl::debug;
-	this->f[1] = &Harl::info;
-	this->f[2] = &Harl::warning;
-	this->f[3] = &Harl::error;
-	this->f[4] = &Harl::excp;
+	f[0] = &Harl::debug;
+	f[1] = &Harl::info;
+	f[2] = &Harl::warning;
+	f[3] = &Harl::error;
+	f[4] = &Harl::excp;
 	level[0] = "DEBUG";
 	level[1] = "INFO";
 	level[2] = "WARNING";

@@ -1,34 +1,26 @@
 #include "Point.hpp"
 
-Point::Point( void ) {
-	this->x = 0;
-	this->y = 0;
-}
+Point::Point(void): x(0), y(0) { }
 
-Point::Point( Fixed x, Fixed y ) {
-	this->x = x;
-	this->y = y;
-}
+Point::Point( Fixed x, Fixed y ): x(x), y(y) { }
 
 Point::~Point( void ) { }
 
-Point::Point( const Point &point ) {
-	*this = point;
-}
+Point::Point( const Point &other ): x(other.x), y(other.y) { }
 
-Point &Point::operator=( const Point &rValue ) {
-	if (this != &rValue) {
-		this->x = rValue.x;
-		this->y = rValue.y;
+Point &Point::operator=( const Point &other ) {
+	if (this != &other) {
+		this->x = other.x;
+		this->y = other.y;
 	}
 	return *this;
 }
 
-const Fixed &Point::getX( void ) const {
+const Fixed &Point::getX(void) const {
 	return (this->x);
 }
 
-const Fixed &Point::getY( void ) const {
+const Fixed &Point::getY(void) const {
 	return (this->y);
 }
 

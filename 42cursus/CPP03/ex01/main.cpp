@@ -2,14 +2,9 @@
 #include "ScavTrap.hpp"
 
 int main( void ) {
-	ScavTrap a("A");
-	ScavTrap b;
-	ClapTrap c;
-	b = b;
-	c = a;
-	a.attack("ScavTrap target");
-	b.attack("ClapTrap target");
+	ScavTrap a("a");
 
+	ScavTrap b = a;
 
 	return 0;
 }

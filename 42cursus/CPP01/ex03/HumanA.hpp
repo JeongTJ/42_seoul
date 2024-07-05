@@ -11,8 +11,8 @@ class HumanA{
 		~HumanA( void );
 		void attack( void );
 	private:
-		Weapon& weapon;
 		std::string name;
+		Weapon& weapon;
 };
 
 #endif
