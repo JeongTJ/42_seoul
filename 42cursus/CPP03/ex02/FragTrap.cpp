@@ -14,10 +14,7 @@ FragTrap::FragTrap(std::string name): ClapTrap(name) {
 	std::cout << "[FragTrap] " << this->name << "객체를 생성." << std::endl;
 }
 
-FragTrap::FragTrap(const FragTrap &other): ClapTrap(other.name) {
-	this->hitPoints = other.hitPoints;
-	this->energyPoints = other.energyPoints;
-	this->attackDamage = other.attackDamage;
+FragTrap::FragTrap(const FragTrap &other): ClapTrap(other) {
 	std::cout << "[FragTrap] " << this->name << "객체를 복사 생성." << std::endl;
 }
 
@@ -28,8 +25,8 @@ FragTrap::~FragTrap(void) {
 FragTrap &FragTrap::operator=(const FragTrap &other) {
 	if (this == &other)
 		return (*this);
-	ClapTrap::operator=(other);
 	std::cout << "[FragTrap] " << other.name << "객체를 " << this->name << "객체에 복사 대입." << std::endl;
+	ClapTrap::operator=(other);
 	return (*this);
 }
 

@@ -1,29 +1,11 @@
 #include "ClapTrap.hpp"
 #include "ScavTrap.hpp"
 #include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
 
 int main( void ) {
-	FragTrap a("A");
-	ScavTrap b("B");
+	DiamondTrap a;
 
-	a.highFivesGuys();
-	b.guardGate();
-
-	ClapTrap c;
-
-	c = a;
-
-	for (int i = 0; i < 200; i++) {
-		std::cout << "=========== " << i << " ===========" << std::endl;
-		c.beRepaired(1);
-	}
-
-	c = b;
-
-	for (int i = 0; i < 200; i++) {
-		std::cout << "=========== " << i << " ===========" << std::endl;
-		c.beRepaired(2);
-	}
-
+	a.whoAmI();
 	return 0;
 }

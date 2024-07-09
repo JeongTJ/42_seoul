@@ -5,7 +5,7 @@ int main( void ) {
 	ScavTrap a("A");
 	ScavTrap b("B");
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 25; i++) {
 		a.attack("B");
 		b.takeDamage(20);
 	}

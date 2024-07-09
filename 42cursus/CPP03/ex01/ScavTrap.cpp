@@ -14,10 +14,7 @@ ScavTrap::ScavTrap(std::string name): ClapTrap(name) {
 	std::cout << "[ScavTrap] " << this->name << "객체를 생성." << std::endl;
 }
 
-ScavTrap::ScavTrap(const ScavTrap &other): ClapTrap(other.name) {
-	this->hitPoints = other.hitPoints;
-	this->energyPoints = other.energyPoints;
-	this->attackDamage = other.attackDamage;
+ScavTrap::ScavTrap(const ScavTrap &other): ClapTrap(other) {
 	std::cout << "[ScavTrap] " << this->name << "객체를 복사 생성." << std::endl;
 }
 
@@ -28,8 +25,8 @@ ScavTrap::~ScavTrap(void) {
 ScavTrap &ScavTrap::operator=(const ScavTrap &other) {
 	if (this == &other)
 		return *this;
-	ClapTrap::operator=(other);
 	std::cout << "[ScavTrap] " << other.name << "객체를 " << this->name << "객체에 복사 대입." << std::endl;
+	ClapTrap::operator=(other);
 	return *this;
 }
 
