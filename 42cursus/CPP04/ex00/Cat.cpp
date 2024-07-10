@@ -1,7 +1,7 @@
 #include "Cat.hpp"
 #include <iostream>
 
-Cat::Cat(void): Animal("Cat") {
+Cat::Cat(void): Animal("Cat"), s(424242, 'x') {
 	std::cout << "[Cat] " << this->type << "타입의 동물 기본 생성." << std::endl;
 }
 
