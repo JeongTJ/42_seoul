@@ -1,8 +1,24 @@
+#include "Animal.hpp"
+#include "Dog.hpp"
+#include "Cat.hpp"
+#include "WrongAnimal.hpp"
+#include "WrongCat.hpp"
+#include <iostream>
+
+void	f(void) {system("leaks CPP04_ex01");}
 
 int main() {
-	F a;
-	F b(a);
+	atexit(f);
 
-	delete a;
-	delete b;
+
+	Animal *animals[10];
+	for (int i = 0; i < 10; i++)
+		if (i & 1)
+			animals[i] = new Cat();
+		else
+			animals[i] = new Dog();
+
+	for (int i = 0; i < 10; i++)
+		delete animals[i];
+	return 0;
 }

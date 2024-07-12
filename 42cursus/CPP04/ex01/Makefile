@@ -1,9 +1,12 @@
 SRCS := \
 	main.cpp \
-	ClapTrap.cpp \
-	ScavTrap.cpp \
-	FragTrap.cpp \
-	DiamondTrap.cpp
+	Animal.cpp \
+	Brain.cpp \
+	Cat.cpp \
+	Dog.cpp \
+	WrongAnimal.cpp \
+	WrongCat.cpp
+
 
 OBJS := $(SRCS:.cpp=.o)
 INCLUDE := .
