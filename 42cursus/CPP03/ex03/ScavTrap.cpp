@@ -7,7 +7,7 @@ ScavTrap::ScavTrap(void): ClapTrap() {
 	std::cout << "[ScavTrap] " << this->name << "객체를 기본 생성." << std::endl;
 }
 
-ScavTrap::ScavTrap(std::string name): ClapTrap(name) {
+ScavTrap::ScavTrap(const std::string &name): ClapTrap(name) {
 	this->hitPoints = 100;
 	this->energyPoints = 50;
 	this->attackDamage = 20;

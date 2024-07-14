@@ -4,7 +4,7 @@ DiamondTrap::DiamondTrap(): ClapTrap("DefaultName_clap_name"), name("DefaultName
 	std::cout << "[DiamondTrap] " << this->name << "객체를 기본 생성." << std::endl;
 }
 
-DiamondTrap::DiamondTrap(std::string name):
+DiamondTrap::DiamondTrap(const std::string &name):
 	ClapTrap(name + "_clap_trap"),
 	ScavTrap(name), FragTrap(name),
 	name(name) {

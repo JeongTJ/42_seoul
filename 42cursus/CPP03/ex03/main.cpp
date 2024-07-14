@@ -7,5 +7,8 @@ int main( void ) {
 	DiamondTrap a;
 
 	a.whoAmI();
+	a.attack("B");
+	a.beRepaired(10);
+	a.takeDamage(10);
 	return 0;
 }

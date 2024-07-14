@@ -8,7 +8,7 @@ ClapTrap::ClapTrap(void):
 	std::cout << "[ClapTrap] " << this->name << "객체를 기본 생성." << std::endl;
 }
 
-ClapTrap::ClapTrap(std::string name):
+ClapTrap::ClapTrap(const std::string &name):
 	name(name),
 	hitPoints(10),
 	energyPoints(10),

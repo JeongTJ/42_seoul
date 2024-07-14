@@ -7,7 +7,7 @@
 class ScavTrap : virtual public ClapTrap {
 	public:
 		ScavTrap(void);
-		ScavTrap(std::string name);
+		ScavTrap(const std::string &name);
 		~ScavTrap(void);
 		ScavTrap(const ScavTrap &other);
 		ScavTrap &operator=(const ScavTrap &other);
