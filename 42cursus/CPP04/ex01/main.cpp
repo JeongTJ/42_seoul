@@ -5,12 +5,7 @@
 #include "WrongCat.hpp"
 #include <iostream>
 
-void	f(void) {system("leaks CPP04_ex01");}
-
 int main() {
-	atexit(f);
-
-
 	Animal *animals[10];
 	for (int i = 0; i < 10; i++)
 		if (i & 1)

@@ -1,6 +1,4 @@
 #include "MateriaSource.hpp"
-#include <iostream>
-
 MateriaSource::MateriaSource() {
 	for (int i = 0; i < SOURCE_SIZE; i++)
 		this->source[i] = NULL;

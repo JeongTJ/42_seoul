@@ -3,10 +3,7 @@
 #include "Ice.hpp"
 #include "Cure.hpp"
 
-void	f(){system("leaks CPP04_ex03");}
-
 int main() {
-	atexit(f);
 	IMateriaSource* src = new MateriaSource();
 	src->learnMateria(new Ice());
 	src->learnMateria(new Cure());

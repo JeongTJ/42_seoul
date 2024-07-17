@@ -1,5 +1,4 @@
 #include "Character.hpp"
-#include <iostream>
 
 Character::Character(): name("Gildong Hong") {
 	for (int i = 0; i < INVENTORY_SIZE; i++)
