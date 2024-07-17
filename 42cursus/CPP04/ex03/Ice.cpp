@@ -1,11 +1,17 @@
 #include "Ice.hpp"
 #include <iostream>
 
-Ice::Ice(): AMateria("ice") { }
+Ice::Ice(): AMateria("ice") {
+	// 구현체 없음
+}
 
-Ice::Ice(const Ice &other): AMateria(other) { }
+Ice::Ice(const Ice &other): AMateria(other) {
+	// 구현체 없음
+}
 
-Ice::~Ice() { }
+Ice::~Ice() {
+	// 구현체 없음
+}
 
 Ice &Ice::operator=(const Ice &other) {
 	if (this == &other)

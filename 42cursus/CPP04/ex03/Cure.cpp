@@ -1,11 +1,17 @@
 #include "Cure.hpp"
 #include <iostream>
 
-Cure::Cure(): AMateria("cure") { }
+Cure::Cure(): AMateria("cure") {
+	// 구현체 없음
+}
 
-Cure::Cure(const Cure &other): AMateria(other) { }
+Cure::Cure(const Cure &other): AMateria(other) {
+	// 구현체 없음
+}
 
-Cure::~Cure() { }
+Cure::~Cure() {
+	// 구현체 없음
+}
 
 Cure &Cure::operator=(const Cure &other) {
 	if (this == &other)
