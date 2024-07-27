@@ -3,17 +3,20 @@
 #include "PresidentialPardonForm.hpp"
 #include "AForm.hpp"
 #include "Bureaucrat.cpp"
-
-#include <unistd.h>
+#include "Intern.hpp"
 
 int main() {
 	try {
-		Bureaucrat a("tajeong", 1);
-		ShrubberyCreationForm b("home");
-		RobotomyRequestForm c("robot");
-		PresidentialPardonForm d("presi");
-		a.signForm(c);
-		a.executeForm(c);
+		Intern internA("A");
+		Bureaucrat A("tajeong", 100);
+		AForm* rff;
+
+		rff = internA.makeForm("ShrubberyCreationForm", "tajeong's tree");
+		A.executeForm(*rff);
+		A.signForm(*rff);
+		A.executeForm(*rff);
+
+		delete rff;
 	} catch (std::exception &e) {
 		std::cerr << e.what() << std::endl;
 	}

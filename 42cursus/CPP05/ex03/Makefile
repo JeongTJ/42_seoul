@@ -1,10 +1,10 @@
 SRCS := \
 	main.cpp \
-	Animal.cpp \
-	Cat.cpp \
-	Dog.cpp \
-	WrongAnimal.cpp \
-	WrongCat.cpp
+	AForm.cpp \
+	ShrubberyCreationForm.cpp \
+	RobotomyRequestForm.cpp \
+	PresidentialPardonForm.cpp \
+	Intern.cpp
 
 OBJS := $(SRCS:.cpp=.o)
 INCLUDE := .

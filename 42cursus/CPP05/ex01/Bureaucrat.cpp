@@ -40,6 +40,7 @@ void Bureaucrat::decrement(const unsigned int& decre) {
 void Bureaucrat::signForm(Form& form) {
 	try {
 		form.beSigned(*this);
+		std::cout << this->name << " signed " << form.getName() << std::endl;
 	} catch (std::exception &e) {
 		std::cout << this->name << " couldn't sign " << form.getName() << " because your grade is too low" << std::endl;
 	}
