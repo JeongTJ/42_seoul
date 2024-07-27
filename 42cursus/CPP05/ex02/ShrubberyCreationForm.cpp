@@ -38,6 +38,4 @@ void ShrubberyCreationForm::execute(Bureaucrat const& executor) const {
 	} else {
 		throw std::runtime_error("Unable to open file for writing: " + (this->target + "_shrubbery") + ", error: " + std::string(strerror(errno)));
 	}
-
 }
-
