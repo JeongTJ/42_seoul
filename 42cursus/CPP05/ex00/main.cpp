@@ -3,7 +3,7 @@
 
 int main() {
 	try {
-		Bureaucrat a("tajeong");
+		Bureaucrat a("tajeong", 42);
 
 		for (int i = 0; i < 20; i++) {
 			for (int j = 0; j < 20; j++)

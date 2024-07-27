@@ -1,4 +1,5 @@
 #include "AForm.hpp"
+#include <iostream>
 #include <iomanip>
 
 /* -------------------------------------------------------------------------- */
