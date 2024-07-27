@@ -1,5 +1,6 @@
 SRCS := \
-	main.cpp
+	main.cpp \
+	Bureaucrat.cpp
 
 OBJS := $(SRCS:.cpp=.o)
 INCLUDE := .

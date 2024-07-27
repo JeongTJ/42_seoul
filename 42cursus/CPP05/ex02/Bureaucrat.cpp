@@ -25,18 +25,25 @@ unsigned int Bureaucrat::getGrade(void) const{
 	return grade;
 }
 
-void Bureaucrat::increment(unsigned int incre) {
+void Bureaucrat::increment(const unsigned int& incre) {
 	if (this->grade <= incre)
 		throw Bureaucrat::GradeTooHighException();
 	this->grade -= incre;
 }
 
-void Bureaucrat::decrement(unsigned int decre) {
+void Bureaucrat::decrement(const unsigned int& decre) {
 	if (this->grade + decre >= 150)
 		throw Bureaucrat::GradeTooLowException();
 	this->grade += decre;
 }
 
+void Bureaucrat::signForm(AForm& form) {
+	try {
+		form.beSigned(*this);
+	} catch (std::exception &e) {
+		std::cout << this->name << " couldn't sign " << form.getName() << " because your grade is too low" << std::endl;
+	}
+}
 
 /* -------------------------------------------------------------------------- */
 /*                            GradeTooHighException                           */
@@ -97,6 +104,6 @@ const char *Bureaucrat::GradeTooLowException::what() const throw() {
 /* -------------------------------------------------------------------------- */
 
 std::ostream &operator<<(std::ostream &ostrm, const Bureaucrat &bureaucrat) {
-	ostrm << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade();
+	ostrm << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << std::endl;
 	return ostrm;
 }
