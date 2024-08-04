@@ -1,6 +1,7 @@
 #include "ShrubberyCreationForm.hpp"
 #include <fstream>
 #include <iostream>
+#include <cstring>
 
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target): AForm("ShrubberyCreationForm", 145, 137), target(target) {
 
@@ -61,6 +62,6 @@ ShrubberyCreationForm::FileNotOpenException &ShrubberyCreationForm::FileNotOpenE
 }
 
 const char *ShrubberyCreationForm::FileNotOpenException::what() const throw() {
-	return ("ShrubberyCreationForm::FileNotOpen error: " + std::string(strerror(errno))).c_str();
+	return "ShrubberyCreationForm::FileNotOpenException";
 }
 
