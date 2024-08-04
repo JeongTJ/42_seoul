@@ -6,7 +6,10 @@
 /* -------------------------------------------------------------------------- */
 
 Bureaucrat::Bureaucrat(const std::string &name, const unsigned int& grade): name(name), grade(grade) {
-	// 구현체 없음
+	if (this->grade < 1)
+		throw Bureaucrat::GradeTooHighException();
+	if (this->grade > 150)
+		throw Bureaucrat::GradeTooLowException();
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat &other): name(other.name), grade(other.grade) {
@@ -25,14 +28,14 @@ unsigned int Bureaucrat::getGrade(void) const{
 	return grade;
 }
 
-void Bureaucrat::increment(const unsigned int& incre) {
+void Bureaucrat::increment(unsigned int incre) {
 	if (this->grade <= incre)
 		throw Bureaucrat::GradeTooHighException();
 	this->grade -= incre;
 }
 
-void Bureaucrat::decrement(const unsigned int& decre) {
-	if (this->grade + decre >= 150)
+void Bureaucrat::decrement(unsigned int decre) {
+	if (this->grade + decre > 150)
 		throw Bureaucrat::GradeTooLowException();
 	this->grade += decre;
 }
@@ -42,8 +45,7 @@ void Bureaucrat::signForm(AForm& form) {
 		form.beSigned(*this);
 		std::cout << this->name << " signed " << form.getName() << std::endl;
 	} catch (std::exception &e) {
-		std::cerr << this->name << " couldn't sign " << form.getName() << " because your grade is too low" << std::endl;
-		std::cerr << "[Error]: " << e.what() << std::endl;
+		std::cerr << this->name << " couldn't sign " << form.getName() << " because " << e.what() << std::endl;
 	}
 }
 
@@ -52,8 +54,7 @@ void Bureaucrat::executeForm(AForm const& form) {
 		form.execute(*this);
 		std::cout << this->name << " executed " << form.getName() << std::endl;
 	} catch (std::exception &e) {
-		std::cerr << this->name << " failed executed " << form.getName() << std::endl;
-		std::cerr << "[Error]: " << e.what() << std::endl;
+		std::cerr << this->name << " failed executed " << form.getName() << " because " << e.what() << std::endl;
 	}
 }
 

@@ -5,6 +5,7 @@
 #include <string>
 
 class Bureaucrat {
+	public:
 		class GradeTooHighException: public std::exception {
 			public:
 				GradeTooHighException(void);
@@ -21,7 +22,6 @@ class Bureaucrat {
 				GradeTooLowException &operator=(const GradeTooLowException& other);
 				const char* what(void) const throw();
 		};
-	public:
 		Bureaucrat(const std::string &name, const unsigned int& grade);
 		Bureaucrat(const Bureaucrat &other);
 		~Bureaucrat();
@@ -30,7 +30,7 @@ class Bureaucrat {
 		void increment(unsigned int incre);
 		void decrement(unsigned int decre);
 	private:
-		Bureaucrat(void);
+		Bureaucrat(void); // 사용하지 않음.
 		Bureaucrat &operator=(const Bureaucrat &other); // 사용하지 않음.
 		const std::string name;
 		unsigned int grade;

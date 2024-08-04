@@ -45,8 +45,8 @@ class AForm {
 		void beSigned(const Bureaucrat& bureaucrat);
 		virtual void execute(Bureaucrat const& executor) const = 0;
 	private:
-		AForm(void);
-		AForm& operator=(const AForm& other);
+		AForm(void); // 사용하지 않음
+		AForm& operator=(const AForm& other); // 사용하지 않음
 		const std::string name;
 		const unsigned int gradeToSign;
 		const unsigned int gradeToExecute;

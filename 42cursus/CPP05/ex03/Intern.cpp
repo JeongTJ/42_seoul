@@ -10,15 +10,15 @@ const std::string Intern::formNames[3] =
 	"PresidentialPardonForm"};
 
 Intern::Intern(const std::string& name): name(name) {
-
+	// 구현체 없음
 }
 
 Intern::~Intern() {
-
+	// 구현체 없음
 }
 
 Intern::Intern(const Intern& other): name(other.name) {
-	
+	// 구현체 없음
 }
 
 Intern& Intern::operator=(const Intern& other) {
@@ -52,4 +52,30 @@ int	Intern::formNameToInt(const std::string& formName) {
 	int i = 0;
 	for (i = 0; i < 3 && formNames[i].compare(formName) != 0; i++);
 	return i;
+}
+/* -------------------------------------------------------------------------- */
+/*                                 FileNotOpen                                */
+/* -------------------------------------------------------------------------- */
+
+Intern::NotFormNameException::NotFormNameException(): std::exception() {
+	// 구현체 없음
+}
+
+Intern::NotFormNameException::~NotFormNameException() throw() {
+	// 구현체 없음
+}
+
+Intern::NotFormNameException::NotFormNameException(const Intern::NotFormNameException &other): std::exception(other) {
+	// 구현체 없음
+}
+
+Intern::NotFormNameException &Intern::NotFormNameException::operator=(const Intern::NotFormNameException &other) {
+	if (this == &other)
+		return *this;
+	std::exception::operator=(other);
+	return *this;
+}
+
+const char *Intern::NotFormNameException::what() const throw() {
+	return "Intern::NotFormNameException";
 }

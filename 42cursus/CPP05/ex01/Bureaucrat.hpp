@@ -8,6 +8,7 @@
 class Form;
 
 class Bureaucrat {
+	public:
 		class GradeTooHighException: public std::exception {
 			public:
 				GradeTooHighException(void);
@@ -24,14 +25,13 @@ class Bureaucrat {
 				GradeTooLowException& operator=(const GradeTooLowException& other);
 				const char* what(void) const throw();
 		};
-	public:
 		Bureaucrat(const std::string& name, const unsigned int& grade);
 		Bureaucrat(const Bureaucrat& other);
 		~Bureaucrat();
 		const std::string &getName(void) const;
 		unsigned int getGrade(void) const;
-		void increment(const unsigned int& incre);
-		void decrement(const unsigned int& decre);
+		void increment(unsigned int incre);
+		void decrement(unsigned int decre);
 		void signForm(Form& form);
 	private:
 		Bureaucrat(void); // 사용하지 않음.

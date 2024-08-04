@@ -6,7 +6,10 @@
 /* -------------------------------------------------------------------------- */
 
 Bureaucrat::Bureaucrat(const std::string &name, const unsigned int& grade): name(name), grade(grade) {
-	// 구현체 없음
+	if (this->grade < 1)
+		throw Bureaucrat::GradeTooHighException();
+	if (this->grade > 150)
+		throw Bureaucrat::GradeTooLowException();
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat &other): name(other.name), grade(other.grade) {
@@ -32,7 +35,7 @@ void Bureaucrat::increment(unsigned int incre) {
 }
 
 void Bureaucrat::decrement(unsigned int decre) {
-	if (this->grade + decre >= 150)
+	if (this->grade + decre > 150)
 		throw Bureaucrat::GradeTooLowException();
 	this->grade += decre;
 }

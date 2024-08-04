@@ -13,7 +13,7 @@ int main() {
 		b.signForm(a);
 		std::cout << a;
 	} catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
+		std::cerr << e.what() << std::endl;
 	}
 	return 0;
 }
