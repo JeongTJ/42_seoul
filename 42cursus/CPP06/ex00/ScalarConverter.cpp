@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <limits>
+#include <iomanip>
 
 void ScalarConverter::convert(const std::string& literal) {
 	std::istringstream iss;
@@ -27,8 +28,8 @@ void ScalarConverter::convert(const std::string& literal) {
 			else
 				std::cout << "char: " << "impossible" << std::endl;
 			std::cout << "int: " << i << std::endl;
-			std::cout << "float: " << static_cast<float>(i) << "f" << std::endl;
-			std::cout << "double: " << static_cast<double>(i) << std::endl;
+			std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(i) << "f" << std::endl;
+			std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(i) << std::endl;
 			break ;
 		case FLOAT:
 			float f;
@@ -44,8 +45,20 @@ void ScalarConverter::convert(const std::string& literal) {
 				std::cout << "int: " << static_cast<int>(f) << std::endl;
 			else
 				std::cout << "int: " << "impossible" << std::endl;
-			std::cout << "float: " << f << "f" << std::endl;
-			std::cout << "double: " << static_cast<double>(f) << std::endl;
+			if (f < -std::numeric_limits<float>::max())
+				std::cout << "float: " << "-inff" << std::endl;
+			else if (std::numeric_limits<float>::max() < f)
+				std::cout << "float: " << "+inff" << std::endl;
+			else
+				std::cout << "float: " << std::fixed << std::setprecision(1) << f << "f" << std::endl;
+			if (f < -std::numeric_limits<double>::max())
+				std::cout << "double: " << "-inf" << std::endl;
+			else if (std::numeric_limits<double>::max() < f)
+				std::cout << "double: " << "+inf" << std::endl;
+			else if (static_cast<int>(f) == f)
+				std::cout << "double: "<< std::fixed << std::setprecision(1) << static_cast<double>(f) << std::endl;
+			else
+				std::cout << "double: "<< static_cast<double>(f) << std::endl;
 			break ;
 		case DOUBLE:
 			double d;
@@ -63,15 +76,23 @@ void ScalarConverter::convert(const std::string& literal) {
 			else
 				std::cout << "int: " << "impossible" << std::endl;
 
-			if (std::numeric_limits<float>::min() <= d && d <= std::numeric_limits<float>::max())
-				std::cout << "float: " << static_cast<float>(d) << std::endl;
-			else if (d < std::numeric_limits<float>::min())
+			if (-std::numeric_limits<float>::max() <= d && d <= std::numeric_limits<float>::max())
+				std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(d) << "f" << std::endl;
+			else if (d < -std::numeric_limits<float>::max())
 				std::cout << "float: " << "-inff" << std::endl;
 			else if (std::numeric_limits<float>::max() < d)
 				std::cout << "float: " << "+inff" << std::endl;
 			else
-				std::cout << "float: " << "nan" << std::endl;
-			std::cout << "double: " << d << std::endl;
+				std::cout << "float: " << "nanf" << std::endl;
+
+			if (d < -std::numeric_limits<double>::max())
+				std::cout << "double: " << "-inf" << std::endl;
+			else if (std::numeric_limits<double>::max() < d)
+				std::cout << "double: " << "+inf" << std::endl;
+			else if (static_cast<int>(d) == d)
+				std::cout << "double: "<< std::fixed << std::setprecision(1) << d << std::endl;
+			else
+				std::cout << "double: "<< d << std::endl;
 			break ;
 		default:
 			std::cout << "char: " << "impossible" << std::endl;
