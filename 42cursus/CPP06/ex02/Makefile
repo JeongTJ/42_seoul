@@ -10,9 +10,9 @@ OBJS := $(SRCS:.cpp=.o)
 INCLUDE := .
 CXX := c++
 CXXFLAGS := -Wall -Werror -Wextra -std=c++98
-NAME := CPP04_ex00
+NAME := CPP06_ex02
 
-SUBJECTNAME := "cpp_module_04_ex00"
+SUBJECTNAME := "cpp_module_06_ex02"
 RED := \033[31m
 GREEN := \033[32m
 BLUE := \033[34m
