@@ -70,12 +70,14 @@ void ScalarConverter::convert(const std::string& literal) {
 				std::cout << "char: " << "Non displayable" << std::endl;
 			else
 				std::cout << "char: " << "impossible" << std::endl;
+			std::cout << "d: " << d << std::endl;
 
 			if (-2148364748 <= d && d <= 2147483647)
 				std::cout << "int: " << static_cast<int>(d) << std::endl;
 			else
 				std::cout << "int: " << "impossible" << std::endl;
 
+			std::cout << "d: " << d << std::endl;
 			if (-std::numeric_limits<float>::max() <= d && d <= std::numeric_limits<float>::max())
 				std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(d) << "f" << std::endl;
 			else if (d < -std::numeric_limits<float>::max())
@@ -85,6 +87,8 @@ void ScalarConverter::convert(const std::string& literal) {
 			else
 				std::cout << "float: " << "nanf" << std::endl;
 
+			std::cout << "d: " << d << std::endl;
+			std::cout << static_cast<int>(d) << std::endl;
 			if (d < -std::numeric_limits<double>::max())
 				std::cout << "double: " << "-inf" << std::endl;
 			else if (std::numeric_limits<double>::max() < d)
