@@ -29,21 +29,20 @@ void identify(Base* p) {
 void identify(Base& p) {
 	try {
 		A& a = dynamic_cast<A&>(p);
-		if (static_cast<void *>(&a))
-			std::cout << "A" << std::endl;
+		static_cast<void>(a);
+		std::cout << "A" << std::endl;
 	} catch (std::exception& e) {
 	}
 	try {
-		B& b =dynamic_cast<B&>(p);
-		if (static_cast<void *>(&b))
-			std::cout << "B" << std::endl;
+		B& b = dynamic_cast<B&>(p);
+		static_cast<void>(b);
+		std::cout << "B" << std::endl;
 	} catch (std::exception& e) {
 	}
 	try {
 		C& c = dynamic_cast<C&>(p);
-
-		if (static_cast<void *>(&c))
-			std::cout << "C" << std::endl;
+		static_cast<void>(c);
+		std::cout << "C" << std::endl;
 	} catch (std::exception& e) {
 	}
 }
