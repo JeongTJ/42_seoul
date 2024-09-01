@@ -1,3 +1,4 @@
+#include "Array.hpp"
 #include <exception>
 
 template <typename T>
@@ -16,13 +17,13 @@ Array<T>::~Array() {
 }
 
 template <typename T>
-Array<T>::Array(const Array& other): data(new T[other.length]), length(other.n) {
+Array<T>::Array(const Array<T>& other): data(new T[other.length]), length(other.n) {
 	for (unsigned int i = 0; i < length; i++)
 		this->data[i] = other.data[i];
 }
 
 template <typename T>
-Array<T>& Array<T>::operator=(const Array& other) {
+Array<T>& Array<T>::operator=(const Array<T>& other) {
 	if (this == &other)
 		return *this;
 	delete[] this->data;
