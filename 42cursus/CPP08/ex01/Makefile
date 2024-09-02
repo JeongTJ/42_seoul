@@ -1,18 +1,14 @@
 SRCS := \
 	main.cpp \
-	Animal.cpp \
-	Cat.cpp \
-	Dog.cpp \
-	WrongAnimal.cpp \
-	WrongCat.cpp
+	Span.cpp
 
 OBJS := $(SRCS:.cpp=.o)
 INCLUDE := .
 CXX := c++
 CXXFLAGS := -Wall -Werror -Wextra -std=c++98
-NAME := CPP04_ex00
+NAME := CPP08_ex01
 
-SUBJECTNAME := "cpp_module_04_ex00"
+SUBJECTNAME := "cpp_module_08_ex01"
 RED := \033[31m
 GREEN := \033[32m
 BLUE := \033[34m
