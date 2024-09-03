@@ -7,8 +7,17 @@ PmergeMe::PmergeMe(int argc, char *argv[]) {
 	for (int i = 0; i < argc; i++) {
 		std::istringstream iss(argv[i]);
 		int data;
-		if (!(iss >> data) || !iss.eof())
+		if (!(iss >> data) || !iss.eof() || data <= 0) {
+			for (std::vector<Node*>::iterator it = vOrigin.begin(); it != vOrigin.end(); it++)
+				delete *it;
+			for (std::list<Node*>::iterator it = lOrigin.begin(); it != lOrigin.end(); it++)
+				delete *it;
+			for (std::vector<Node*>::iterator it = vSort.begin(); it != vSort.end(); it++)
+				delete *it;
+			for (std::list<Node*>::iterator it = lSort.begin(); it != lSort.end(); it++)
+				delete *it;
 			throw std::logic_error("Error");
+		}
 		vOrigin.push_back(new Node(data, 0, NULL, NULL));
 		vSort.push_back(new Node(data, 0, NULL, NULL));
 		lOrigin.push_back(new Node(data, 0, NULL, NULL));
@@ -17,7 +26,14 @@ PmergeMe::PmergeMe(int argc, char *argv[]) {
 }
 
 PmergeMe::~PmergeMe() {
-	
+	for (std::vector<Node*>::iterator it = vOrigin.begin(); it != vOrigin.end(); it++)
+		delete *it;
+	for (std::list<Node*>::iterator it = lOrigin.begin(); it != lOrigin.end(); it++)
+		delete *it;
+	for (std::vector<Node*>::iterator it = vSort.begin(); it != vSort.end(); it++)
+		delete *it;
+	for (std::list<Node*>::iterator it = lSort.begin(); it != lSort.end(); it++)
+		delete *it;
 }
 
 PmergeMe::PmergeMe(const PmergeMe& other): vOrigin(other.vOrigin), vSort(other.vSort), lOrigin(other.lOrigin), lSort(other.lSort) {
@@ -187,12 +203,12 @@ std::list<PmergeMe::Node*>& PmergeMe::getList() {
 
 
 void PmergeMe::printVector() {
-	std::cout << std::setw(10) << "Before: ";
+	std::cout << std::setw(10) << std::left << "Before: ";
 	for (std::vector<Node*>::iterator it = vOrigin.begin(); it != vOrigin.end(); it++)
 		std::cout << (*it)->getHead() << " ";
 	std::cout << std::endl;
 
-	std::cout << std::setw(10) << "After: ";
+	std::cout << std::setw(10) << std::left << "After: ";
 	for (std::vector<Node*>::iterator it = vSort.begin(); it != vSort.end(); it++)
 		std::cout << (*it)->getHead() << " ";
 	std::cout << std::endl;
