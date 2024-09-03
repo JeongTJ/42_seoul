@@ -3,7 +3,7 @@
 #include <iostream>
 #include <iomanip>
 
-PmergeMe::PmergeMe(int argc, char *argv[]) {
+PmergeMe::PmergeMe(int argc, char *argv[]): vCnt(0), lCnt(0) {
 	for (int i = 0; i < argc; i++) {
 		std::istringstream iss(argv[i]);
 		int data;
@@ -36,7 +36,7 @@ PmergeMe::~PmergeMe() {
 		delete *it;
 }
 
-PmergeMe::PmergeMe(const PmergeMe& other): vOrigin(other.vOrigin), vSort(other.vSort), lOrigin(other.lOrigin), lSort(other.lSort) {
+PmergeMe::PmergeMe(const PmergeMe& other): vOrigin(other.vOrigin), vSort(other.vSort), lOrigin(other.lOrigin), lSort(other.lSort), vCnt(0), lCnt(0) {
 	
 }
 
@@ -60,6 +60,7 @@ void PmergeMe::merge(std::vector<Node*>& before) {
 		return ;
 
 	for (currIt = before.begin(), nextIt = currIt + 1; currIt != before.end() && nextIt != before.end(); currIt = nextIt + 1, nextIt = currIt + 1) {
+		vCnt++;
 		if ((*currIt)->getHead() >= (*nextIt)->getHead()) {
 			curr.push_back(new Node((*currIt)->getHead(), (*currIt)->getLevel() + 1, *currIt, *nextIt));
 		} else {
@@ -94,7 +95,8 @@ void PmergeMe::merge(std::vector<Node*>& before) {
 		while (1) {
 			if (*it == NULL)
 				break ;
-			std::vector<Node*>::iterator insertIt = std::lower_bound(mainChain.begin(), mainChain.begin() + totalInsertCnt + (it - subChain.begin()), *it, Node::nodeCompare);
+			// std::vector<Node*>::iterator insertIt = std::lower_bound(mainChain.begin(), mainChain.begin() + totalInsertCnt + (it - subChain.begin()), *it, Node::nodeCompare);
+			std::vector<Node*>::iterator insertIt = binarySearch(mainChain.begin(), mainChain.begin() + totalInsertCnt + (it - subChain.begin()), *it);
 			mainChain.insert(insertIt, *it);
 			*it = NULL;
 			totalInsertCnt++;
@@ -103,7 +105,8 @@ void PmergeMe::merge(std::vector<Node*>& before) {
 		power++;
 	}
 	if (remain != NULL) {
-		std::vector<Node*>::iterator insertIt = std::lower_bound(mainChain.begin(), mainChain.end(), remain, Node::nodeCompare);
+		// std::vector<Node*>::iterator insertIt = std::lower_bound(mainChain.begin(), mainChain.end(), remain, Node::nodeCompare);
+		std::vector<Node*>::iterator insertIt = binarySearch(mainChain.begin(), mainChain.end(), remain);
 		mainChain.insert(insertIt, remain);
 		remain = NULL;
 	}
@@ -123,6 +126,7 @@ void PmergeMe::merge(std::list<Node*>& before) {
 	nextIt = before.begin();
 	nextIt++;
 	while (currIt != before.end() && nextIt != before.end()) {
+		lCnt++;
 		if ((*currIt)->getHead() >= (*nextIt)->getHead()) {
 			curr.push_back(new Node((*currIt)->getHead(), (*currIt)->getLevel() + 1, *currIt, *nextIt));
 		} else {
@@ -165,7 +169,8 @@ void PmergeMe::merge(std::list<Node*>& before) {
 			std::list<Node*>::iterator mainChainSearchBegin = mainChain.begin();
 			std::list<Node*>::iterator mainChainSearchEnd = mainChain.begin();
 			std::advance(mainChainSearchEnd, totalInsertCnt + std::distance(subChain.begin(), it));
-			std::list<Node*>::iterator insertIt = std::lower_bound(mainChainSearchBegin, mainChainSearchEnd, *it, Node::nodeCompare);
+			// std::list<Node*>::iterator insertIt = std::lower_bound(mainChainSearchBegin, mainChainSearchEnd, *it, Node::nodeCompare);
+			std::list<Node*>::iterator insertIt = binarySearch(mainChainSearchBegin, mainChainSearchEnd, *it);
 			mainChain.insert(insertIt, *it);
 			// for (std::list<Node*>::iterator searchIt = mainChainSearchBegin; searchIt != mainChainSearchEnd; searchIt++) {
 			// 	if ((*it)->getHead() <= (*searchIt)->getHead()) {
@@ -186,11 +191,64 @@ void PmergeMe::merge(std::list<Node*>& before) {
 		// 		break ;
 		// 	}
 		// }
-		std::list<Node*>::iterator insertIt = std::lower_bound(mainChain.begin(), mainChain.end(), remain, Node::nodeCompare);
+		// std::list<Node*>::iterator insertIt = std::lower_bound(mainChain.begin(), mainChain.end(), remain, Node::nodeCompare);
+		std::list<Node*>::iterator insertIt = binarySearch(mainChain.begin(), mainChain.end(), remain);
 		mainChain.insert(insertIt, remain);
 		remain = NULL;
 	}
 	before = mainChain;
+}
+
+std::vector<PmergeMe::Node*>::iterator PmergeMe::binarySearch(std::vector<PmergeMe::Node*>::iterator start, std::vector<PmergeMe::Node*>::iterator end, PmergeMe::Node* find) {
+	unsigned int start_idx = 0;
+	unsigned int end_idx = end - start;
+	unsigned int mid_idx;
+	std::vector<PmergeMe::Node*>::iterator tmp;
+
+	while (start_idx < end_idx) {
+		mid_idx = (end_idx + start_idx) / 2;
+		tmp = start + mid_idx;
+		vCnt++;
+		if ((*tmp)->getHead() > find->getHead()) {
+			end_idx = mid_idx;
+		} else if ((*tmp)->getHead() < find->getHead()) {
+			start_idx = mid_idx + 1;
+		} else
+			break ;
+	}
+	if (start_idx >= end_idx)
+		tmp = start + start_idx;
+	else
+		tmp = start + mid_idx;
+	return tmp;
+}
+
+std::list<PmergeMe::Node*>::iterator PmergeMe::binarySearch(std::list<PmergeMe::Node*>::iterator start, std::list<PmergeMe::Node*>::iterator end, PmergeMe::Node* find) {
+	unsigned int start_idx = 0;
+	unsigned int end_idx = std::distance(start, end);
+	unsigned int mid_idx;
+	std::list<PmergeMe::Node*>::iterator tmp;
+
+	while (start_idx < end_idx) {
+		mid_idx = (end_idx + start_idx) / 2;
+		tmp = start;
+		std::advance(tmp, mid_idx);
+		lCnt++;
+		if ((*tmp)->getHead() > find->getHead()) {
+			end_idx = mid_idx;
+		} else if ((*tmp)->getHead() < find->getHead()) {
+			start_idx = mid_idx + 1;
+		} else
+			break ;
+	}
+	if (start_idx > end_idx) {
+		tmp = start;
+		std::advance(tmp, start_idx);
+	} else {
+		tmp = start;
+		std::advance(tmp, mid_idx);
+	}
+	return tmp;
 }
 
 std::vector<PmergeMe::Node*>& PmergeMe::getVector() {
@@ -201,6 +259,13 @@ std::list<PmergeMe::Node*>& PmergeMe::getList() {
 	return this->lSort;
 }
 
+unsigned int PmergeMe::getVCnt() {
+	return vCnt;
+}
+
+unsigned int PmergeMe::getLCnt() {
+	return lCnt;
+}
 
 void PmergeMe::printVector() {
 	std::cout << std::setw(10) << std::left << "Before: ";

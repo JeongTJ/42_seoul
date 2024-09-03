@@ -22,6 +22,9 @@ int main(int argc, char *argv[]) {
 		end = clock();
 		elapsed = static_cast<double>(end - start);
 		std::cout << "Time to process a range of " << pmergeme.getVector().size() << " elements with std::list : " << elapsed << " us" << std::endl;
+
+		std::cout << "vector compare cnt: " << pmergeme.getVCnt() << std::endl;
+		std::cout << "list   compare cnt: " << pmergeme.getLCnt() << std::endl;
 	} catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
 	}
