@@ -2,9 +2,7 @@
 #include <iostream>
 #include <ctime>
 
-void f() {system("leaks `PmergeMe");}
-
-void test(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
 	try {
 		clock_t start;
 		clock_t end;
@@ -27,11 +25,5 @@ void test(int argc, char *argv[]) {
 	} catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
 	}
-}
-
-int main(int argc, char *argv[]) {
-	test(argc, argv);
-	while (1)
-		;
 	return 0;
 }
