@@ -6,7 +6,7 @@
 
 class Span {
 	public:
-		Span(int N);
+		Span(int length);
 		~Span();
 		Span(const Span& other);
 		Span& operator=(const Span& other);
@@ -16,7 +16,7 @@ class Span {
 
 		template <typename T>
 		void addNumber(T& container) {
-			if (container.size() + data.size() > N)
+			if (container.size() + data.size() > capacity)
 				throw std::logic_error("container is full");
 			for (typename T::iterator it = container.begin(); it != container.end(); it++)
 				data.push_back(*it);
@@ -24,7 +24,7 @@ class Span {
 	private:
 		Span();
 		std::vector<unsigned int> data;
-		unsigned int N;
+		unsigned int capacity;
 };
 
 #endif
