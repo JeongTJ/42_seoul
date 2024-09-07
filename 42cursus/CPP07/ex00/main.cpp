@@ -38,16 +38,6 @@ std::ostream& operator<<(std::ostream& os, Dummy& dummy) {
 
 int main() {
 	{
-		Dummy a(1, 2), b(3, 4);
-		std::cout << "a is " << a << std::endl;
-		std::cout << "b is " << b << std::endl;
-		swap(a, b);
-		std::cout << "a is " << a << std::endl;
-		std::cout << "b is " << b << std::endl;
-		std::cout << "min(a, b) is " << min(a, b) << std::endl;
-		std::cout << "max(a, b) is " << max(a, b) << std::endl;
-	}
-	{
 		int a, b;
 		std::cout << "input the int value a: ";
 		std::cin >> a;
@@ -55,11 +45,11 @@ int main() {
 		std::cin >> b;
 		std::cout << "a is " << a << std::endl;
 		std::cout << "b is " << b << std::endl;
-		swap(a, b);
+		::swap(a, b);
 		std::cout << "a is " << a << std::endl;
 		std::cout << "b is " << b << std::endl;
-		std::cout << "min(a, b) is " << min(a, b) << std::endl;
-		std::cout << "max(a, b) is " << max(a, b) << std::endl;
+		std::cout << "min(a, b) is " << ::min(a, b) << std::endl;
+		std::cout << "max(a, b) is " << ::max(a, b) << std::endl;
 	}
 	{
 		double a, b;
@@ -69,11 +59,11 @@ int main() {
 		std::cin >> b;
 		std::cout << "a is " << a << std::endl;
 		std::cout << "b is " << b << std::endl;
-		swap(a, b);
+		::swap(a, b);
 		std::cout << "a is " << a << std::endl;
 		std::cout << "b is " << b << std::endl;
-		std::cout << "min(a, b) is " << min(a, b) << std::endl;
-		std::cout << "max(a, b) is " << max(a, b) << std::endl;
+		std::cout << "min(a, b) is " << ::min(a, b) << std::endl;
+		std::cout << "max(a, b) is " << ::max(a, b) << std::endl;
 	}
 	{
 		std::string a, b;
@@ -81,6 +71,16 @@ int main() {
 		std::cin >> a;
 		std::cout << "input the string value b: ";
 		std::cin >> b;
+		std::cout << "a is " << a << std::endl;
+		std::cout << "b is " << b << std::endl;
+		::swap(a, b);
+		std::cout << "a is " << a << std::endl;
+		std::cout << "b is " << b << std::endl;
+		std::cout << "min(a, b) is " << ::min(a, b) << std::endl;
+		std::cout << "max(a, b) is " << ::max(a, b) << std::endl;
+	}
+	{
+		Dummy a(1, 2), b(3, 4);
 		std::cout << "a is " << a << std::endl;
 		std::cout << "b is " << b << std::endl;
 		swap(a, b);
