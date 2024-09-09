@@ -6,11 +6,11 @@
 
 class Span {
 	public:
-		Span(int length);
+		Span(unsigned int length);
 		~Span();
 		Span(const Span& other);
 		Span& operator=(const Span& other);
-		void addNumber(unsigned int n);
+		void addNumber(int n);
 		unsigned int shortestSpan();
 		unsigned int longestSpan();
 
@@ -23,7 +23,7 @@ class Span {
 		}
 	private:
 		Span();
-		std::vector<unsigned int> data;
+		std::vector<int> data;
 		unsigned int capacity;
 };
 

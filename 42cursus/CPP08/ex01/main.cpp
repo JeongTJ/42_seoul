@@ -5,8 +5,8 @@
 
 int main() {
 	try {
-		std::vector<unsigned int> vector;
-		std::list<unsigned int> list;
+		std::vector<int> vector;
+		std::list<int> list;
 
 		for (int i = 0; i < 100; i++)
 			vector.push_back(i * i * i);
