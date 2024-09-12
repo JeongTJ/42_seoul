@@ -2,19 +2,6 @@
 #include <iostream>
 #include <string>
 
-void multi_2(int& a) {
-	std::cout << a * 2 << std::endl;
-}
-
-void power_2(int& a) {
-	std::cout << a * a << std::endl;
-}
-void string_double(std::string& a) {
-	for (size_t i = 0; i < a.size(); i++)
-		std::cout << a;
-	std::cout << std::endl;
-}
-
 int main() {
 	try {
 		int array[10];

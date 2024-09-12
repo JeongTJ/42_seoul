@@ -1,14 +1,14 @@
 #include "Span.hpp"
 
-Span::Span(int N): data(std::vector<unsigned int>(0)), N(N) {
-	
+Span::Span(unsigned int capacity): data(std::vector<int>(0)), capacity(capacity) {
+
 }
 
 Span::~Span() {
-	
+
 }
 
-Span::Span(const Span& other): data(other.data), N(other.N) {
+Span::Span(const Span& other): data(other.data), capacity(other.capacity) {
 
 }
 
@@ -16,29 +16,31 @@ Span& Span::operator=(const Span& other) {
 	if (this == &other)
 		return *this;
 	this->data = other.data;
-	this->N = other.N;
+	this->capacity = other.capacity;
 	return *this;
 }
 
-void Span::addNumber(unsigned int n) {
-	if (this->data.size() == N)
+void Span::addNumber(int n) {
+	if (this->data.size() == capacity)
 		throw std::logic_error("container is full");
 	this->data.push_back(n);
 }
 
 unsigned int Span::shortestSpan() {
-	std::sort(this->data.begin(), this->data.end());
-	unsigned int res = ~0;
-	if (this->data.size() < 1)
+	if (this->data.size() < 2)
 		throw std::logic_error("cannot found shortestSpan");
-	for (std::vector<unsigned int>::const_iterator it = this->data.begin(); it + 1 != this->data.end(); it++)
-		res = std::min(res, *(it + 1) - *it);
+	std::vector<int> tmp = this->data;
+	std::sort(tmp.begin(), tmp.end());
+	unsigned int res = ~0;
+	for (std::vector<int>::const_iterator it = tmp.begin(); it + 1 != tmp.end(); it++)
+		res = std::min(res, static_cast<unsigned int>(*(it + 1) - *it));
 	return res;
 }
 
 unsigned int Span::longestSpan() {
-	std::sort(this->data.begin(), this->data.end());
-	if (this->data.size() < 1)
+	if (this->data.size() < 2)
 		throw std::logic_error("cannot found longestSpan");
-	return *(this->data.end() - 1) - *this->data.begin();
+	std::vector<int> tmp = this->data;
+	std::sort(tmp.begin(), tmp.end());
+	return static_cast<unsigned int>(*(tmp.end() - 1)) - static_cast<unsigned int>(*tmp.begin());
 }
