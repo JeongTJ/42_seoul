@@ -85,8 +85,8 @@ void PmergeMe::merge(std::vector<Node*>& before) {
 	int totalInsertCnt = 1;
 	int power = 2;
 	while (1) {
-		if (subChain.size() > std::pow(2, power) - totalInsertCnt)
-			it = subChain.begin() + std::pow(2, power) - totalInsertCnt;
+		if (subChain.size() > pow(2, power) - totalInsertCnt - 1)
+			it = subChain.begin() + pow(2, power) - totalInsertCnt - 1;
 		else
 			it = subChain.end() - 1;
 		if (*it == NULL) {
@@ -151,9 +151,9 @@ void PmergeMe::merge(std::list<Node*>& before) {
 	int totalInsertCnt = 1;
 	int power = 2;
 	while (1) {
-		if (subChain.size() > std::pow(2, power) - totalInsertCnt) {
+		if (subChain.size() > std::pow(2, power) - totalInsertCnt - 1) {
 			it = subChain.begin();
-			std::advance(it, std::pow(2, power) - totalInsertCnt);
+			std::advance(it, std::pow(2, power) - totalInsertCnt - 1);
 		} else {
 			it = subChain.end();
 			std::advance(it, -1);
@@ -189,21 +189,16 @@ std::vector<PmergeMe::Node*>::iterator PmergeMe::binarySearch(std::vector<Pmerge
 	unsigned int mid_idx;
 	std::vector<PmergeMe::Node*>::iterator tmp;
 
-	while (start_idx < end_idx) {
+	while (start_idx + 1 < end_idx) {
 		mid_idx = (end_idx + start_idx) / 2;
 		tmp = start + mid_idx;
 		vCnt++;
-		if ((*tmp)->getHead() > find->getHead()) {
+		if ((*tmp)->getHead() > find->getHead())
 			end_idx = mid_idx;
-		} else if ((*tmp)->getHead() < find->getHead()) {
+		else
 			start_idx = mid_idx + 1;
-		} else
-			break ;
 	}
-	if (start_idx >= end_idx)
-		tmp = start + start_idx;
-	else
-		tmp = start + mid_idx;
+	tmp = start + start_idx;
 	return tmp;
 }
 
@@ -213,25 +208,18 @@ std::list<PmergeMe::Node*>::iterator PmergeMe::binarySearch(std::list<PmergeMe::
 	unsigned int mid_idx;
 	std::list<PmergeMe::Node*>::iterator tmp;
 
-	while (start_idx < end_idx) {
+	while (start_idx + 1 < end_idx) {
 		mid_idx = (end_idx + start_idx) / 2;
 		tmp = start;
 		std::advance(tmp, mid_idx);
 		lCnt++;
-		if ((*tmp)->getHead() > find->getHead()) {
+		if ((*tmp)->getHead() > find->getHead())
 			end_idx = mid_idx;
-		} else if ((*tmp)->getHead() < find->getHead()) {
+		else
 			start_idx = mid_idx + 1;
-		} else
-			break ;
 	}
-	if (start_idx > end_idx) {
-		tmp = start;
-		std::advance(tmp, start_idx);
-	} else {
-		tmp = start;
-		std::advance(tmp, mid_idx);
-	}
+	tmp = start;
+	std::advance(tmp, start_idx);
 	return tmp;
 }
 
