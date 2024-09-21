@@ -2,8 +2,9 @@
 #include <sstream>
 #include <iostream>
 
-RPN::RPN(const char* input): iss(std::istringstream(std::string(input))) {
-
+RPN::RPN(const char* input) {
+	// iss = std::istringstream(std::string(input));
+	iss.str(std::string(input));
 }
 
 RPN::~RPN() {
@@ -31,7 +32,7 @@ long RPN::run() {
 			a = stack.top();
 			stack.pop();
 			stack.push(calc(a, b, c));
-		} else 
+		} else
 			throw ErrorException();
 		if (!(iss.get(empty)))
 			break ;

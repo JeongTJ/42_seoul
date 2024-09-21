@@ -2,6 +2,7 @@
 #include <sstream>
 #include <iostream>
 #include <iomanip>
+#include <cmath>
 
 PmergeMe::PmergeMe(int argc, char *argv[]): vCnt(0), lCnt(0) {
 	for (int i = 0; i < argc; i++) {
@@ -37,7 +38,7 @@ PmergeMe::~PmergeMe() {
 }
 
 PmergeMe::PmergeMe(const PmergeMe& other): vOrigin(other.vOrigin), vSort(other.vSort), lOrigin(other.lOrigin), lSort(other.lSort), vCnt(0), lCnt(0) {
-	
+
 }
 
 PmergeMe& PmergeMe::operator=(const PmergeMe& other) {
