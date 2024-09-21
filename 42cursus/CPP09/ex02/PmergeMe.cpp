@@ -95,7 +95,6 @@ void PmergeMe::merge(std::vector<Node*>& before) {
 		while (1) {
 			if (*it == NULL)
 				break ;
-			// std::vector<Node*>::iterator insertIt = std::lower_bound(mainChain.begin(), mainChain.begin() + totalInsertCnt + (it - subChain.begin()), *it, Node::nodeCompare);
 			std::vector<Node*>::iterator insertIt = binarySearch(mainChain.begin(), mainChain.begin() + totalInsertCnt + (it - subChain.begin()), *it);
 			mainChain.insert(insertIt, *it);
 			*it = NULL;
@@ -105,7 +104,6 @@ void PmergeMe::merge(std::vector<Node*>& before) {
 		power++;
 	}
 	if (remain != NULL) {
-		// std::vector<Node*>::iterator insertIt = std::lower_bound(mainChain.begin(), mainChain.end(), remain, Node::nodeCompare);
 		std::vector<Node*>::iterator insertIt = binarySearch(mainChain.begin(), mainChain.end(), remain);
 		mainChain.insert(insertIt, remain);
 		remain = NULL;
@@ -169,15 +167,8 @@ void PmergeMe::merge(std::list<Node*>& before) {
 			std::list<Node*>::iterator mainChainSearchBegin = mainChain.begin();
 			std::list<Node*>::iterator mainChainSearchEnd = mainChain.begin();
 			std::advance(mainChainSearchEnd, totalInsertCnt + std::distance(subChain.begin(), it));
-			// std::list<Node*>::iterator insertIt = std::lower_bound(mainChainSearchBegin, mainChainSearchEnd, *it, Node::nodeCompare);
 			std::list<Node*>::iterator insertIt = binarySearch(mainChainSearchBegin, mainChainSearchEnd, *it);
 			mainChain.insert(insertIt, *it);
-			// for (std::list<Node*>::iterator searchIt = mainChainSearchBegin; searchIt != mainChainSearchEnd; searchIt++) {
-			// 	if ((*it)->getHead() <= (*searchIt)->getHead()) {
-			// 		mainChain.insert(searchIt, *it);
-			// 		break ;
-			// 	}
-			// }
 			*it = NULL;
 			totalInsertCnt++;
 			it--;
@@ -185,13 +176,6 @@ void PmergeMe::merge(std::list<Node*>& before) {
 		power++;
 	}
 	if (remain != NULL) {
-		// for (std::list<Node*>::iterator searchIt = mainChain.begin(); searchIt != mainChain.end(); searchIt++) {
-		// 	if ((remain)->getHead() <= (*searchIt)->getHead()) {
-		// 		mainChain.insert(searchIt, remain);
-		// 		break ;
-		// 	}
-		// }
-		// std::list<Node*>::iterator insertIt = std::lower_bound(mainChain.begin(), mainChain.end(), remain, Node::nodeCompare);
 		std::list<Node*>::iterator insertIt = binarySearch(mainChain.begin(), mainChain.end(), remain);
 		mainChain.insert(insertIt, remain);
 		remain = NULL;
