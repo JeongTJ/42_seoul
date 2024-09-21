@@ -39,7 +39,7 @@ void BitcoinExchange::fillDatabase() {
 			else {
 				databaseStream.setstate(std::ifstream::failbit);
 				throw DuplicateDatesException();
-			} 
+			}
 		} else if (!databaseStream.eof() && databaseStream.fail())
 			throw InvalidDataBaseFile();
 	}
@@ -64,7 +64,9 @@ void BitcoinExchange::run() {
 
 	while (!inputStream.eof()) {
 		getline(inputStream, line);
-		iss = std::istringstream();
+		if (line.empty())
+			continue;
+		iss.clear();
 		iss.str(line);
 		iss >> date >> char_or >> value;
 		if (char_or != '|' || iss.fail())
