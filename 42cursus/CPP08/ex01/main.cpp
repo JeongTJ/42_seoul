@@ -5,16 +5,16 @@
 
 int main() {
 	try {
-		std::vector<int> vector;
-		std::list<int> list;
+		std::vector<int> vector1;
+		std::list<int> list1;
 
 		for (int i = 0; i < 100; i++)
-			vector.push_back(i * i * i);
+			vector1.push_back(i * i * i);
 		for (int i = 100; i < 200; i++)
-			list.push_back(i * i * i * i);
+			list1.push_back(i * i * i * i);
 		Span sp = Span(500);
-		sp.addNumber(vector);
-		sp.addNumber(list);
+		sp.addNumber(vector1);
+		sp.addNumber(list1);
 		std::cout << sp.shortestSpan() << std::endl;
 		std::cout << sp.longestSpan() << std::endl;
 	} catch (std::exception& e) {
