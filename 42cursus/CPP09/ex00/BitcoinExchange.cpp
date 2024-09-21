@@ -1,6 +1,7 @@
 #include "BitcoinExchange.hpp"
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 
 /* *************** */
 /* BitcoinExchange */
