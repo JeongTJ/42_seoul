@@ -71,20 +71,22 @@ void BitcoinExchange::run() {
 		iss.str(line);
 		iss >> date >> char_or >> value;
 		if (char_or != '|' || iss.fail())
-			std::cout << "Error: bad input => " << line << std::endl;
+			std::cerr << "Error: bad input => " << line << std::endl;
 		else if (!iss.eof() || value < 0)
-			std::cout << "Error: not a positive number." << std::endl;
+			std::cerr << "Error: not a positive number." << std::endl;
 		else if (1000 < value)
-			std::cout << "Error: too large a number." << std::endl;
+			std::cerr << "Error: too large a number." << std::endl;
 		else {
 			databaseValueIt = database.lower_bound(date);
-			if (databaseValueIt == database.begin()) {
-				std::cout << "Error: date is too far in the past" << std::endl;
-			} else  {
-				if (databaseValueIt->first != date) {
+			if (databaseValueIt != database.begin()) {
+				if (databaseValueIt == database.end() || databaseValueIt->first != date)
 					databaseValueIt--;
-				}
 				std::cout << date << " => " << value << " = " << value * databaseValueIt->second << std::endl;
+			} else if (databaseValueIt == database.begin()) {
+				if (databaseValueIt->first == date)
+					std::cout << date << " => " << value << " = " << value * databaseValueIt->second << std::endl;
+				else
+					std::cerr << "Error: date is too far in the past" << std::endl;
 			}
 		}
 	}
