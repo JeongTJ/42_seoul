@@ -1,311 +1,411 @@
 #include "PmergeMe.hpp"
-#include <sstream>
 #include <iostream>
-#include <iomanip>
-#include <cmath>
 
-PmergeMe::PmergeMe(int argc, char *argv[]): vCnt(0), lCnt(0) {
-	for (int i = 0; i < argc; i++) {
-		std::istringstream iss(argv[i]);
-		int data;
-		if (!(iss >> data) || !iss.eof() || data <= 0) {
-			for (std::vector<Node*>::iterator it = vOrigin.begin(); it != vOrigin.end(); it++)
-				delete *it;
-			for (std::list<Node*>::iterator it = lOrigin.begin(); it != lOrigin.end(); it++)
-				delete *it;
-			for (std::vector<Node*>::iterator it = vSort.begin(); it != vSort.end(); it++)
-				delete *it;
-			for (std::list<Node*>::iterator it = lSort.begin(); it != lSort.end(); it++)
-				delete *it;
-			throw std::logic_error("Error");
+PmergeMe::PmergeMe(std::vector<unsigned int> input): node_max_count(input.size() * 10) {
+	node_pool.resize(node_max_count);
+	node_idx = 0;
+	v_compare = 0;
+
+	for (size_t i = 0; i < input.size(); i++) {
+		Node *tmp = get_new_node();
+		if (tmp == NULL) {
+			return ;
 		}
-		vOrigin.push_back(new Node(data, 0, NULL, NULL));
-		vSort.push_back(new Node(data, 0, NULL, NULL));
-		lOrigin.push_back(new Node(data, 0, NULL, NULL));
-		lSort.push_back(new Node(data, 0, NULL, NULL));
+		tmp->set_head(input[i]);
+		tmp->set_main(NULL);
+		tmp->set_sub(NULL);
+		v_origin.push_back(tmp);
+	}
+	for (size_t i = 0; i < v_origin.size(); i++) {
+		Node *tmp = get_new_node();
+		if (tmp == NULL) {
+			return ;
+		}
+		*tmp = *v_origin[i];
+		v_sort.push_back(tmp);
+	}
+	for (size_t i = 0; i < input.size(); i++) {
+		Node *tmp = get_new_node();
+		if (tmp == NULL) {
+			return ;
+		}
+		tmp->set_head(input[i]);
+		tmp->set_main(NULL);
+		tmp->set_sub(NULL);
+		l_origin.push_back(tmp);
+	}
+	for (std::list<Node*>::iterator it = l_origin.begin(); it != l_origin.end(); it++) {
+		Node *tmp = get_new_node();
+		if (tmp == NULL) {
+			return ;
+		}
+		*tmp = *(*it);
+		l_sort.push_back(tmp);
 	}
 }
 
-PmergeMe::~PmergeMe() {
-	for (std::vector<Node*>::iterator it = vOrigin.begin(); it != vOrigin.end(); it++)
-		delete *it;
-	for (std::list<Node*>::iterator it = lOrigin.begin(); it != lOrigin.end(); it++)
-		delete *it;
-	for (std::vector<Node*>::iterator it = vSort.begin(); it != vSort.end(); it++)
-		delete *it;
-	for (std::list<Node*>::iterator it = lSort.begin(); it != lSort.end(); it++)
-		delete *it;
-}
+PmergeMe::~PmergeMe() { }
 
-PmergeMe::PmergeMe(const PmergeMe& other): vOrigin(other.vOrigin), vSort(other.vSort), lOrigin(other.lOrigin), lSort(other.lSort), vCnt(0), lCnt(0) {
+PmergeMe::PmergeMe(const PmergeMe &other): v_origin(other.v_origin), v_sort(other.v_sort), node_pool(other.node_pool), node_max_count(other.node_max_count), node_idx(other.node_idx) {
 
 }
 
-PmergeMe& PmergeMe::operator=(const PmergeMe& other) {
-	if (this == &other)
+PmergeMe &PmergeMe::operator=(const PmergeMe &other) {
+	if (this == &other) {
 		return *this;
-	this->vOrigin = other.vOrigin;
-	this->vSort = other.vSort;
-	this->lOrigin = other.lOrigin;
-	this->lSort = other.lSort;
+	}
 	return *this;
 }
 
-void PmergeMe::merge(std::vector<Node*>& before) {
-	std::vector<Node*> curr;
-	std::vector<Node*>::iterator currIt;
-	std::vector<Node*>::iterator nextIt;
-	Node* remain = NULL;
-
-	if (before.size() == 1)
-		return ;
-
-	for (currIt = before.begin(), nextIt = currIt + 1; currIt != before.end() && nextIt != before.end(); currIt = nextIt + 1, nextIt = currIt + 1) {
-		vCnt++;
-		if ((*currIt)->getHead() >= (*nextIt)->getHead()) {
-			curr.push_back(new Node((*currIt)->getHead(), (*currIt)->getLevel() + 1, *currIt, *nextIt));
-		} else {
-			curr.push_back(new Node((*nextIt)->getHead(), (*nextIt)->getLevel() + 1, *nextIt, *currIt));
-		}
-	}
-	if (currIt != before.end())
-		remain = *currIt;
-	merge(curr);
-	std::vector<Node*>::iterator it;
-	std::vector<Node*> mainChain;
-	std::vector<Node*> subChain;
-
-	for (std::vector<Node*>::iterator it = curr.begin(); it != curr.end(); it++) {
-		mainChain.push_back((*it)->getMain());
-		subChain.push_back((*it)->getSub());
-		delete *it;
-	}
-
-	mainChain.insert(mainChain.begin(), *subChain.begin());
-	*subChain.begin() = NULL;
-	int totalInsertCnt = 1;
-	int power = 2;
-	while (1) {
-		if (subChain.size() > pow(2, power) - totalInsertCnt - 1)
-			it = subChain.begin() + pow(2, power) - totalInsertCnt - 1;
-		else
-			it = subChain.end() - 1;
-		if (*it == NULL) {
-			break ;
-		}
-		while (1) {
-			if (*it == NULL)
-				break ;
-			std::vector<Node*>::iterator insertIt = binarySearch(mainChain.begin(), mainChain.begin() + totalInsertCnt + (it - subChain.begin()), *it);
-			mainChain.insert(insertIt, *it);
-			*it = NULL;
-			totalInsertCnt++;
-			it--;
-		}
-		power++;
-	}
-	if (remain != NULL) {
-		std::vector<Node*>::iterator insertIt = binarySearch(mainChain.begin(), mainChain.end(), remain);
-		mainChain.insert(insertIt, remain);
-		remain = NULL;
-	}
-	before = mainChain;
-}
-
-void PmergeMe::merge(std::list<Node*>& before) {
-	std::list<Node*> curr;
-	std::list<Node*>::iterator currIt;
-	std::list<Node*>::iterator nextIt;
-	Node* remain = NULL;
-
-	if (before.size() == 1)
-		return ;
-
-	currIt = before.begin();
-	nextIt = before.begin();
-	nextIt++;
-	while (currIt != before.end() && nextIt != before.end()) {
-		lCnt++;
-		if ((*currIt)->getHead() >= (*nextIt)->getHead()) {
-			curr.push_back(new Node((*currIt)->getHead(), (*currIt)->getLevel() + 1, *currIt, *nextIt));
-		} else {
-			curr.push_back(new Node((*nextIt)->getHead(), (*nextIt)->getLevel() + 1, *nextIt, *currIt));
-		}
-		std::advance(currIt, 2);
-		std::advance(nextIt, 2);
-	}
-	if (currIt != before.end())
-		remain = *currIt;
-	merge(curr);
-	std::list<Node*>::iterator it;
-	std::list<Node*> mainChain;
-	std::list<Node*> subChain;
-
-	for (std::list<Node*>::iterator it = curr.begin(); it != curr.end(); it++) {
-		mainChain.push_back((*it)->getMain());
-		subChain.push_back((*it)->getSub());
-		delete *it;
-	}
-
-	mainChain.insert(mainChain.begin(), *subChain.begin());
-	*subChain.begin() = NULL;
-	int totalInsertCnt = 1;
-	int power = 2;
-	while (1) {
-		if (subChain.size() > std::pow(2, power) - totalInsertCnt - 1) {
-			it = subChain.begin();
-			std::advance(it, std::pow(2, power) - totalInsertCnt - 1);
-		} else {
-			it = subChain.end();
-			std::advance(it, -1);
-		}
-		if (*it == NULL) {
-			break ;
-		}
-		while (1) {
-			if (*it == NULL)
-				break ;
-			std::list<Node*>::iterator mainChainSearchBegin = mainChain.begin();
-			std::list<Node*>::iterator mainChainSearchEnd = mainChain.begin();
-			std::advance(mainChainSearchEnd, totalInsertCnt + std::distance(subChain.begin(), it));
-			std::list<Node*>::iterator insertIt = binarySearch(mainChainSearchBegin, mainChainSearchEnd, *it);
-			mainChain.insert(insertIt, *it);
-			*it = NULL;
-			totalInsertCnt++;
-			it--;
-		}
-		power++;
-	}
-	if (remain != NULL) {
-		std::list<Node*>::iterator insertIt = binarySearch(mainChain.begin(), mainChain.end(), remain);
-		mainChain.insert(insertIt, remain);
-		remain = NULL;
-	}
-	before = mainChain;
-}
-
-std::vector<PmergeMe::Node*>::iterator PmergeMe::binarySearch(std::vector<PmergeMe::Node*>::iterator start, std::vector<PmergeMe::Node*>::iterator end, PmergeMe::Node* find) {
-	unsigned int start_idx = 0;
-	unsigned int end_idx = end - start;
-	unsigned int mid_idx;
-	std::vector<PmergeMe::Node*>::iterator tmp;
-
-	while (start_idx + 1 < end_idx) {
-		mid_idx = (end_idx + start_idx) / 2;
-		tmp = start + mid_idx;
-		vCnt++;
-		if ((*tmp)->getHead() > find->getHead())
-			end_idx = mid_idx;
-		else
-			start_idx = mid_idx + 1;
-	}
-	tmp = start + start_idx;
-	return tmp;
-}
-
-std::list<PmergeMe::Node*>::iterator PmergeMe::binarySearch(std::list<PmergeMe::Node*>::iterator start, std::list<PmergeMe::Node*>::iterator end, PmergeMe::Node* find) {
-	unsigned int start_idx = 0;
-	unsigned int end_idx = std::distance(start, end);
-	unsigned int mid_idx;
-	std::list<PmergeMe::Node*>::iterator tmp;
-
-	while (start_idx + 1 < end_idx) {
-		mid_idx = (end_idx + start_idx) / 2;
-		tmp = start;
-		std::advance(tmp, mid_idx);
-		lCnt++;
-		if ((*tmp)->getHead() > find->getHead())
-			end_idx = mid_idx;
-		else
-			start_idx = mid_idx + 1;
-	}
-	tmp = start;
-	std::advance(tmp, start_idx);
-	return tmp;
-}
-
-std::vector<PmergeMe::Node*>& PmergeMe::getVector() {
-	return this->vSort;
-}
-
-std::list<PmergeMe::Node*>& PmergeMe::getList() {
-	return this->lSort;
-}
-
-unsigned int PmergeMe::getVCnt() {
-	return vCnt;
-}
-
-unsigned int PmergeMe::getLCnt() {
-	return lCnt;
-}
-
-void PmergeMe::printVector() {
-	std::cout << std::setw(10) << std::left << "Before: ";
-	for (std::vector<Node*>::iterator it = vOrigin.begin(); it != vOrigin.end(); it++)
-		std::cout << (*it)->getHead() << " ";
-	std::cout << std::endl;
-
-	std::cout << std::setw(10) << std::left << "After: ";
-	for (std::vector<Node*>::iterator it = vSort.begin(); it != vSort.end(); it++)
-		std::cout << (*it)->getHead() << " ";
-	std::cout << std::endl;
-}
-
-void PmergeMe::printList() {
-	std::cout << std::setw(10) << "Before: ";
-	for (std::list<Node*>::iterator it = lOrigin.begin(); it != lOrigin.end(); it++)
-		std::cout << (*it)->getHead() << " ";
-	std::cout << std::endl;
-
-	std::cout << std::setw(10) << "After: ";
-	for (std::list<Node*>::iterator it = lSort.begin(); it != lSort.end(); it++)
-		std::cout << (*it)->getHead() << " ";
-	std::cout << std::endl;
-}
-
-/* **** */
-/* Node */
-/* **** */
-
-PmergeMe::Node::Node(int data, int level, Node* main, Node* sub): head(data), level(level), main(main), sub(sub) {
-
+PmergeMe::Node::Node(): head(-1), main(NULL), sub(NULL) {
+	
 }
 
 PmergeMe::Node::~Node() {
-
+	
 }
 
-PmergeMe::Node::Node(const Node& other): head(other.head), level(other.level), main(other.main), sub(other.sub) {
-
+PmergeMe::Node::Node(const Node &other): head(other.head), main(other.main), sub(other.sub) {
+	
 }
 
-PmergeMe::Node& PmergeMe::Node::operator=(const Node& other) {
-	if (this == &other)
+PmergeMe::Node &PmergeMe::Node::operator=(const Node &other) {
+	if (this == &other) {
 		return *this;
+	}
 	this->head = other.head;
-	this->level = other.level;
 	this->main = other.main;
-	this->sub = other.sub;
+	this->sub  = other.sub;
 	return *this;
 }
 
-int PmergeMe::Node::getHead() const {
+void PmergeMe::Node::set_head(int head) {
+	this->head = head;
+}
+
+void PmergeMe::Node::set_main(Node *main) {
+	this->main = main;
+}
+
+void PmergeMe::Node::set_sub(Node *sub) {
+	this->sub = sub;
+}
+
+void PmergeMe::Node::set_real_idx(size_t real_idx) {
+	this->real_idx = real_idx;
+}
+
+int PmergeMe::Node::get_head() const {
 	return this->head;
 }
 
-int PmergeMe::Node::getLevel() const {
-	return this->level;
-}
-
-PmergeMe::Node* PmergeMe::Node::getMain() const {
+PmergeMe::Node *PmergeMe::Node::get_main() const {
 	return this->main;
 }
 
-PmergeMe::Node* PmergeMe::Node::getSub() const {
+PmergeMe::Node *PmergeMe::Node::get_sub() const {
 	return this->sub;
 }
 
-bool PmergeMe::Node::nodeCompare(const Node* a, const Node* b) {
-	return a->getHead() <= b->getHead();
+size_t PmergeMe::Node::get_real_idx() const {
+	return this->real_idx;
+}
+
+PmergeMe::Node* PmergeMe::get_new_node() {
+	if (node_idx >= node_max_count) {
+		return NULL;
+	}
+	return &node_pool[node_idx++];
+}
+
+void PmergeMe::v_sorting() {
+	print_v_sort();
+	v_merge();
+	print_v_sort();
+}
+
+void PmergeMe::print_v_sort() {
+	for (size_t i = 0; i < v_sort.size(); i++) {
+		std::cout << v_sort[i]->get_head() << ' ';
+	}
+	std::cout << '\n';
+}
+
+unsigned int PmergeMe::get_v_compare() const {
+	return this->v_compare;
+}
+
+void PmergeMe::v_merge() {
+	if (v_sort.size() < 2) {
+		return ;
+	}
+	Node *remain_node = NULL;
+	std::vector<Node*> even_idx;
+	std::vector<Node*> odd_idx;
+
+	for (size_t i = 0; i < v_sort.size(); i++) {
+		if (i % 2 == 0) {
+			even_idx.push_back(v_sort[i]);
+		} else {
+			odd_idx.push_back(v_sort[i]);
+		}
+	}
+	if (even_idx.size() > odd_idx.size()) {
+		remain_node = even_idx[even_idx.size() - 1];
+		even_idx.pop_back();
+	}
+
+	v_sort.clear();
+	for (size_t i = 0; i < even_idx.size(); i++) {
+		Node *tmp = get_new_node();
+		Node *main_node;
+		Node *sub_node;
+
+		if (tmp == NULL) {
+			return ;
+		}
+		v_compare++;
+		if (even_idx[i]->get_head() >= odd_idx[i]->get_head()) {
+			main_node = even_idx[i];
+			sub_node = odd_idx[i];
+		} else {
+			main_node = odd_idx[i];
+			sub_node = even_idx[i];
+		}
+		tmp->set_head(main_node->get_head());
+		tmp->set_main(main_node);
+		tmp->set_sub(sub_node);
+
+		v_sort.push_back(tmp);
+	}
+
+	v_merge();
+	v_insertion();
+	if (remain_node == NULL) {
+		return ;
+	}
+	size_t insert_idx;
+
+	insert_idx = v_binary_search(0, v_sort.size(), remain_node, v_sort);
+	v_sort.insert(v_sort.begin() + insert_idx, remain_node);
+}
+
+void PmergeMe::v_insertion() {
+	std::vector<Node*> main_chain;
+	std::vector<Node*> sub_chain;
+
+	for (size_t i = 0; i < v_sort.size(); i++) {
+		main_chain.push_back(v_sort[i]->get_main());
+		sub_chain.push_back(v_sort[i]->get_sub());
+		sub_chain[i]->set_real_idx(i);
+		main_chain[i]->set_real_idx(i);
+	}
+
+	main_chain.insert(main_chain.begin(), sub_chain[0]);
+	sub_chain[0] = NULL;
+	sub_chain.insert(sub_chain.begin(), NULL);
+
+	size_t two_power = 2;
+	int idx = two_power;
+	while (1) {
+		if (two_power < sub_chain.size()) {
+			idx = two_power - 1;
+		} else {
+			idx = sub_chain.size() - 1;
+		}
+		if (sub_chain[sub_chain.size() - 1] == NULL) {
+			break;
+		}
+		while (idx >= 0) {
+			if (sub_chain[idx] != NULL) {
+				size_t insert_idx;
+
+				insert_idx = v_binary_search(0, idx, sub_chain[idx], main_chain);
+				main_chain.insert(main_chain.begin() + insert_idx, sub_chain[idx]);
+				sub_chain[idx] = NULL;
+				sub_chain.insert(sub_chain.begin() + insert_idx, NULL);
+
+				if ((int)insert_idx < idx) {
+					idx++;
+				}
+			}
+			idx--;
+		}
+		two_power *= 2;
+	}
+	
+	v_sort.clear();
+	for (size_t i = 0; i < main_chain.size(); i++) {
+		v_sort.push_back(main_chain[i]);
+	}
+}
+
+size_t PmergeMe::v_binary_search(size_t s, size_t e, Node *target, std::vector<Node*> &arr) {
+	size_t start, mid, end;
+
+	start = s;
+	end = e;
+	while (start < end) {
+		mid = (start + end) / 2;
+		v_compare++;
+		if (arr[mid]->get_head() > target->get_head()) {
+			end = mid;
+		} else {
+			start = mid + 1;
+		}
+	}
+	return start;
+}
+
+void PmergeMe::l_sorting() {
+	// print_l_sort();
+	l_merge();
+	// print_l_sort();
+}
+
+void PmergeMe::print_l_sort() {
+	for (std::list<Node*>::iterator it = l_sort.begin(); it != l_sort.end(); it++) {
+		std::cout << (*it)->get_head() << ' ';
+	}
+	std::cout << '\n';
+}
+
+unsigned int PmergeMe::get_l_compare() const {
+	return this->l_compare;
+}
+
+void PmergeMe::l_merge() {
+	if (l_sort.size() < 2) {
+		return ;
+	}
+	Node *remain_node = NULL;
+	std::list<Node*> even_idx;
+	std::list<Node*> odd_idx;
+	int idx = 0;
+
+	for (std::list<Node*>::iterator it = l_sort.begin(); it != l_sort.end(); it++, idx++) {
+		if (idx % 2 == 0) {
+			even_idx.push_back(*it);
+		} else {
+			odd_idx.push_back(*it);
+		}
+	}
+	if (even_idx.size() > odd_idx.size()) {
+		remain_node = even_idx.back();
+		even_idx.pop_back();
+	}
+
+	l_sort.clear();
+	for (std::list<Node*>::iterator eit = even_idx.begin(), oit = odd_idx.begin(); eit != even_idx.end() && oit != odd_idx.end(); eit++, oit++) {
+		Node *tmp = get_new_node();
+		Node *main_node;
+		Node *sub_node;
+
+		if (tmp == NULL) {
+			return ;
+		}
+		l_compare++;
+		if ((*eit)->get_head() >= (*oit)->get_head()) {
+			main_node = (*eit);
+			sub_node = (*oit);
+		} else {
+			main_node = (*oit);
+			sub_node = (*eit);
+		}
+		tmp->set_head(main_node->get_head());
+		tmp->set_main(main_node);
+		tmp->set_sub(sub_node);
+
+		l_sort.push_back(tmp);
+	}
+
+	l_merge();
+	l_insertion();
+	if (remain_node == NULL) {
+		return ;
+	}
+	size_t insert_idx;
+
+	insert_idx = l_binary_search(0, l_sort.size(), remain_node, l_sort);
+	std::list<Node*>::iterator insert_it = l_sort.begin();
+	std::advance(insert_it, insert_idx);
+	l_sort.insert(insert_it, remain_node);
+}
+
+void PmergeMe::l_insertion() {
+	std::list<Node*> main_chain;
+	std::list<Node*> sub_chain;
+	int idx = 0;
+
+	for (std::list<Node*>::iterator it = l_sort.begin(); it != l_sort.end(); it++, idx++) {
+		main_chain.push_back((*it)->get_main());
+		sub_chain.push_back((*it)->get_sub());
+		main_chain.back()->set_real_idx(idx);
+		sub_chain.back()->set_real_idx(idx);
+	}
+
+	main_chain.insert(main_chain.begin(), sub_chain.front());
+	sub_chain.front() = NULL;
+	sub_chain.insert(sub_chain.begin(), NULL);
+
+	size_t two_power = 2;
+	idx = two_power;
+	std::list<Node*>::reverse_iterator it = sub_chain.rbegin();
+	while (1) {
+		if (two_power < sub_chain.size()) {
+			idx = two_power;
+		} else {
+			idx = sub_chain.size();
+		}
+		if (sub_chain.back() == NULL) {
+			break;
+		}
+		it = sub_chain.rbegin();
+		std::advance(it, sub_chain.size() - idx);
+		while (it != sub_chain.rend()) {
+			if ((*it) != NULL) {
+				size_t insert_idx;
+
+				insert_idx = l_binary_search(0, idx - 1, (*it), main_chain);
+				std::list<Node*>::iterator insert_it = main_chain.begin();
+				std::list<Node*>::iterator null_insert_it = sub_chain.begin();
+				std::advance(insert_it, insert_idx);
+				std::advance(null_insert_it, insert_idx);
+				main_chain.insert(insert_it, (*it));
+				(*it) = NULL;
+				sub_chain.insert(null_insert_it, NULL);
+				if ((int)insert_idx < idx) {
+					idx++;
+				}
+			}
+			it++;
+			idx--;
+		}
+		two_power *= 2;
+	}
+	
+	l_sort.clear();
+	for (std::list<Node*>::iterator it = main_chain.begin(); it != main_chain.end(); it++) {
+		l_sort.push_back((*it));
+	}
+}
+
+size_t PmergeMe::l_binary_search(size_t s, size_t e, Node *target, std::list<Node*> &arr) {
+	size_t start, mid, end;
+	std::list<Node*>::iterator it;
+
+	start = s;
+	end = e;
+	while (start < end) {
+		mid = (start + end) / 2;
+		it = arr.begin();
+		std::advance(it, mid);
+		l_compare++;
+		if ((*it)->get_head() > target->get_head()) {
+			end = mid;
+		} else {
+			start = mid + 1;
+		}
+	}
+	return start;
 }
