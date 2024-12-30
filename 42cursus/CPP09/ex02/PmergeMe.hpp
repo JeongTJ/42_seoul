@@ -1,55 +1,63 @@
 #pragma once
-#ifndef PMERGEME_HPP
-# define PMERGEME_HPP
-
-# include <vector>
-# include <deque>
-# include <list>
-# include <utility>
+#include <vector>
+#include <list>
+#include <iostream>
 
 class PmergeMe {
 	public:
+		PmergeMe(std::vector<unsigned int> input);
+		~PmergeMe();
+
+		void v_sorting();
+		void l_sorting();
+		void print_v_sort();
+		void print_l_sort();
+		unsigned int get_v_compare() const ;
+		unsigned int get_l_compare() const ;
+	private:
 		class Node {
 			public:
 				Node();
-				Node(int data);
-				Node(int data, int level, Node* main, Node* sub);
 				~Node();
-				Node(const Node& other);
-				Node& operator=(const Node& other);
-				int getHead() const;
-				int getLevel() const;
-				Node* getMain() const;
-				Node* getSub() const;
-				static bool nodeCompare(const Node* a, const Node* b);
+				Node(const Node &other);
+				Node &operator=(const Node &other);
+
+				void set_head(int head);
+				void set_main(Node *main);
+				void set_sub(Node *sub);
+				void set_real_idx(size_t real_idx);
+				int get_head() const ;
+				Node *get_main() const ;
+				Node *get_sub() const ;
+				size_t get_real_idx() const ;
 			private:
-				int head;
-				int level;
-				Node* main;
-				Node* sub;
+				unsigned int head;
+				size_t real_idx;
+				Node *main;
+				Node *sub;
 		};
 		PmergeMe();
-		PmergeMe(int argc, char *argv[]);
-		~PmergeMe();
-		PmergeMe(const PmergeMe& other);
-		PmergeMe& operator=(const PmergeMe& other);
-		void merge(std::vector<Node*>& before);
-		void merge(std::list<Node*>& before);
-		std::vector<Node*>& getVector();
-		std::list<Node*>& getList();
-		unsigned int getVCnt();
-		unsigned int getLCnt();
-		void printVector();
-		void printList();
-		std::vector<Node*>::iterator binarySearch(std::vector<Node*>::iterator start, std::vector<Node*>::iterator end, Node* find);
-		std::list<Node*>::iterator binarySearch(std::list<Node*>::iterator start, std::list<Node*>::iterator end, Node* find);
-	private:
-		std::vector<Node*> vOrigin;
-		std::vector<Node*> vSort;
-		std::list<Node*> lOrigin;
-		std::list<Node*> lSort;
-		unsigned int vCnt;
-		unsigned int lCnt;
-};
+		PmergeMe(const PmergeMe &other);
+		PmergeMe &operator=(const PmergeMe &other);
+		Node* get_new_node();
 
-#endif
+		void v_merge();
+		void v_insertion();
+		size_t v_binary_search(size_t s, size_t e, Node *target, std::vector<Node*> &arr);
+
+		void l_merge();
+		void l_insertion();
+		size_t l_binary_search(size_t s, size_t e, Node *target, std::list<Node*> &arr);
+
+		std::vector<Node*> v_origin;
+		std::vector<Node*> v_sort;
+		std::list<Node*> l_origin;
+		std::list<Node*> l_sort;
+		unsigned int v_compare;
+		unsigned int l_compare;
+
+		std::vector<Node> node_pool;
+		const unsigned int node_max_count;
+		unsigned int node_idx;
+
+};

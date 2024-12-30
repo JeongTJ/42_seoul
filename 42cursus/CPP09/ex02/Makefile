@@ -5,7 +5,7 @@ SRCS := \
 OBJS := $(SRCS:.cpp=.o)
 INCLUDE := .
 CXX := c++
-CXXFLAGS := -Wall -Werror -Wextra -std=c++98 
+CXXFLAGS := -Wall -Werror -Wextra -std=c++98 -fsanitize=address -g
 NAME := PmergeMe
 
 SUBJECTNAME := "cpp_module_09_ex02"
