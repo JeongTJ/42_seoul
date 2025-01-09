@@ -1,0 +1,53 @@
+services:
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    image: mariadb:tajeong
+    container_name: mariadb
+    networks:
+      - docker-network
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    # volumes:
+    #   - wordpress-database:
+
+  nginx:
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    image: nginx:tajeong
+    container_name: nginx
+    networks:
+      - docker-network
+    ports:
+      - "443:443"
+    depends_on:
+      - wordpress
+
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    image: wordpress:tajeong
+    container_name: wordpress
+    networks:
+      - docker-network
+    depends_on:
+      - mariadb
+    volumes:
+      - wordpress-website:
+
+networks:
+  docker-network:
+    name: docker-network
+
+volumes:
+  wordpress-website:
+    driver_opts:
+      # type: "nfs"
+      # o: "addr=10.40.0.199,nolock,soft,rw"
+      # device: ":/home/tajeong/data"
+      # device: ":/home/tajeong/data"
+  wordpress-database:
+
