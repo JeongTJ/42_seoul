@@ -1,5 +1,6 @@
 services:
   mariadb:
+    init: true
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
@@ -8,11 +9,18 @@ services:
     networks:
       - docker-network
     environment:
+      MYSQL_ROOT_USERNAME: ${MYSQL_ROOT_USERNAME}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE_NAME: ${MYSQL_DATABASE_NAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USERNAME: ${MYSQL_USERNAME}
+      MYSQL_HOSTNAME: ${MYSQL_HOSTNAME}
+    # volumes:
     # volumes:
     #   - wordpress-database:
 
   nginx:
+    init: true
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
@@ -26,6 +34,7 @@ services:
       - wordpress
 
   wordpress:
+    init: true
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
@@ -36,7 +45,12 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - wordpress-website:
+      - wordpress-website:/home/tajeong/data
+    environment:
+      MYSQL_ROOT_USERNAME: ${MYSQL_ROOT_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE_NAME: ${MYSQL_DATABASE_NAME}
+      MYSQL_HOSTNAME: ${MYSQL_HOSTNAME}
 
 networks:
   docker-network:
@@ -44,10 +58,19 @@ networks:
 
 volumes:
   wordpress-website:
+    name: wordpress-website
+    driver: local
     driver_opts:
-      # type: "nfs"
-      # o: "addr=10.40.0.199,nolock,soft,rw"
-      # device: ":/home/tajeong/data"
-      # device: ":/home/tajeong/data"
-  wordpress-database:
+      type: bind
+      o: bind,rw
+      # device: "/home/tajeong/data/wp"
+      device: /Users/jeongtaejun/Documents/develop/42project/42cursus/inception/home/tajeong/data/wp
+  # wordpress-database:
+  #   name: wordpress-website
+  #   driver: local
+  #   driver_opts:
+  #     type: bind
+  #     o: bind,rw
+  #     # device: "/home/tajeong/data/db"
+  #     device: /Users/jeongtaejun/Documents/develop/42project/42cursus/inception/home/tajeong/data/db
 
