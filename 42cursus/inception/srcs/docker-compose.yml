@@ -12,12 +12,11 @@ services:
       MYSQL_ROOT_USERNAME: ${MYSQL_ROOT_USERNAME}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE_NAME: ${MYSQL_DATABASE_NAME}
+      MYSQL_USER_HOSTNAME: ${MYSQL_USER_HOSTNAME}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_USERNAME: ${MYSQL_USERNAME}
-      MYSQL_HOSTNAME: ${MYSQL_HOSTNAME}
-    # volumes:
-    # volumes:
-    #   - wordpress-database:
+    volumes:
+      - wordpress-database:/var/lib/mysql
 
   nginx:
     init: true
@@ -32,6 +31,10 @@ services:
       - "443:443"
     depends_on:
       - wordpress
+    volumes:
+      - wordpress-website:${WORDPRESS_DIR}
+    environment:
+      WORDPRESS_DIR: ${WORDPRESS_DIR}
 
   wordpress:
     init: true
@@ -45,12 +48,14 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - wordpress-website:/home/tajeong/data
+      - wordpress-website:${WORDPRESS_DIR}
+      # - wordpress-website:/home/tajeong/data
     environment:
       MYSQL_ROOT_USERNAME: ${MYSQL_ROOT_USERNAME}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE_NAME: ${MYSQL_DATABASE_NAME}
       MYSQL_HOSTNAME: ${MYSQL_HOSTNAME}
+      WORDPRESS_DIR: ${WORDPRESS_DIR}
 
 networks:
   docker-network:
@@ -65,12 +70,12 @@ volumes:
       o: bind,rw
       # device: "/home/tajeong/data/wp"
       device: /Users/jeongtaejun/Documents/develop/42project/42cursus/inception/home/tajeong/data/wp
-  # wordpress-database:
-  #   name: wordpress-website
-  #   driver: local
-  #   driver_opts:
-  #     type: bind
-  #     o: bind,rw
-  #     # device: "/home/tajeong/data/db"
-  #     device: /Users/jeongtaejun/Documents/develop/42project/42cursus/inception/home/tajeong/data/db
+  wordpress-database:
+    name: wordpress-database
+    driver: local
+    driver_opts:
+      type: bind
+      o: bind,rw
+      # device: "/home/tajeong/data/db"
+      device: /Users/jeongtaejun/Documents/develop/42project/42cursus/inception/home/tajeong/data/db
 

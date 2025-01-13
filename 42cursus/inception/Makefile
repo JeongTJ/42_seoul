@@ -9,14 +9,16 @@ DB_VOLUME_DIR = ./home/$(USER)/data/db
 
 NAME := inception
 
-all: wp db build
+all:
 	@ echo "[$@]"
-	docker-compose $(DOCKER_COMPOSE_FLAGS) up -d
+	make db
+	make wp
+	# make build
+	docker-compose $(DOCKER_COMPOSE_FLAGS) up -d --build
 
 restart:
 	@ echo "[$@]"
 	docker-compose $(DOCKER_COMPOSE_FLAGS) restart
-
 
 wp:
 	@ echo "[$@]"
@@ -38,16 +40,19 @@ logs:
 	@ echo "[$@]"
 	docker-compose $(DOCKER_COMPOSE_FLAGS) logs $(CONT)
 
-re: fclean all
+re:
 	@ echo "[$@]"
-	@ echo re
+	make fclean
+	make all
 
 clean:
 	@ echo "[$@]"
-	docker-compose $(DOCKER_COMPOSE_FLAGS) down -v
+	docker-compose $(DOCKER_COMPOSE_FLAGS) down
 
 fclean:
 	@ echo "[$@]"
-	rm -rf $(WP_VOLUME_DIR) $(DB_VOLUME_DIR)
 	make clean
+	docker-compose $(DOCKER_COMPOSE_FLAGS) down -v
+	# rm -rf $(WP_VOLUME_DIR)
+	rm -rf $(WP_VOLUME_DIR) $(DB_VOLUME_DIR)
 
