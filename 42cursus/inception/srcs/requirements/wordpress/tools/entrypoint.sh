@@ -7,7 +7,6 @@ TARGET_FILE2="${WORDPRESS_DIR}/wp-content"
 TARGET_FILE3="${WORDPRESS_DIR}/wp-includes"
 CONFIG_FILE="${WORDPRESS_DIR}/wp-config.php"
 
-
 cd ${WORDPRESS_DIR}
 
 if [ ! -d "$TARGET_FILE1" ] || [ ! -d "$TARGET_FILE2" ] || [ ! -d "$TARGET_FILE3" ]; then
@@ -18,11 +17,12 @@ else
 fi
 
 while [ ! -d "$TARGET_FILE1" ] || [ ! -d "$TARGET_FILE2" ] || [ ! -d "$TARGET_FILE3" ]; do
-    echo "Waiting for $TARGET_FILE to be created..."
+    echo "Waiting for $TARGET_FILE1, $TARGET_FILE2, $TARGET_FILE3 to be created..."
     sleep 1
 done
 
-# wp config create --dbname=wp_db --dbuser=tajeong-root --dbpass=1234 --dbhost=wordpress.docker-network --allow-root
+
+
 if [ ! -f "$CONFIG_FILE" ]; then
 	wp config create --dbname=$MYSQL_DATABASE_NAME --dbuser=$MYSQL_ROOT_USERNAME --dbpass=$MYSQL_ROOT_PASSWORD --dbhost=$MYSQL_HOSTNAME --allow-root
 fi

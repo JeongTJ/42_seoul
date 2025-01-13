@@ -4,8 +4,8 @@ FROM debian:bullseye
 RUN apt update -y
 RUN apt install -y mariadb-server mariadb-client
 
-# # 데이터 디렉터리 초기화
-# RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql
+# 추가된 인스트럭션
+RUN rm -rf /var/lib/mysql/*
 
 RUN mkdir -p /run/mysqld
 RUN chown -R mysql:mysql /run/mysqld

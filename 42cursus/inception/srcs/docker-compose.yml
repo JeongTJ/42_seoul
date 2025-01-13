@@ -17,6 +17,12 @@ services:
       MYSQL_USERNAME: ${MYSQL_USERNAME}
     volumes:
       - wordpress-database:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
 
   nginx:
     init: true
@@ -30,11 +36,13 @@ services:
     ports:
       - "443:443"
     depends_on:
-      - wordpress
+      wordpress:
+        condition: service_healthy
     volumes:
       - wordpress-website:${WORDPRESS_DIR}
     environment:
       WORDPRESS_DIR: ${WORDPRESS_DIR}
+    restart: always
 
   wordpress:
     init: true
@@ -46,7 +54,14 @@ services:
     networks:
       - docker-network
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "pgrep", "php-fpm"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
     volumes:
       - wordpress-website:${WORDPRESS_DIR}
       # - wordpress-website:/home/tajeong/data
@@ -56,6 +71,7 @@ services:
       MYSQL_DATABASE_NAME: ${MYSQL_DATABASE_NAME}
       MYSQL_HOSTNAME: ${MYSQL_HOSTNAME}
       WORDPRESS_DIR: ${WORDPRESS_DIR}
+    restart: always
 
 networks:
   docker-network:
