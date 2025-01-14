@@ -9,19 +9,17 @@ services:
     networks:
       - docker-network
     environment:
-      MYSQL_ROOT_USERNAME: ${MYSQL_ROOT_USERNAME}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE_NAME: ${MYSQL_DATABASE_NAME}
       MYSQL_USER_HOSTNAME: ${MYSQL_USER_HOSTNAME}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_USERNAME: ${MYSQL_USERNAME}
     volumes:
       - wordpress-database:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+    # healthcheck:
+    #   test: ["CMD", "mysqladmin", "ping"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
     restart: always
 
   nginx:
@@ -36,8 +34,9 @@ services:
     ports:
       - "443:443"
     depends_on:
-      wordpress:
-        condition: service_healthy
+      - wordpress
+      # wordpress:
+      #   condition: service_healthy
     volumes:
       - wordpress-website:${WORDPRESS_DIR}
     environment:
@@ -54,23 +53,30 @@ services:
     networks:
       - docker-network
     depends_on:
-      mariadb:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "pgrep", "php-fpm"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 5s
+      - mariadb
+      # mariadb:
+        # condition: service_healthy
+    # healthcheck:
+    #   test: ["CMD", "pgrep", "php-fpm"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+    #   start_period: 5s
     volumes:
       - wordpress-website:${WORDPRESS_DIR}
-      # - wordpress-website:/home/tajeong/data
     environment:
-      MYSQL_ROOT_USERNAME: ${MYSQL_ROOT_USERNAME}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USERNAME: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE_NAME: ${MYSQL_DATABASE_NAME}
       MYSQL_HOSTNAME: ${MYSQL_HOSTNAME}
       WORDPRESS_DIR: ${WORDPRESS_DIR}
+      WORDPRESS_ADMIN_USERNAME: ${WORDPRESS_ADMIN_USERNAME}
+      WORDPRESS_ADMIN_PASSWORD: ${WORDPRESS_ADMIN_PASSWORD}
+      WORDPRESS_ADMIN_EMAIL: ${WORDPRESS_ADMIN_EMAIL}
+      WORDPRESS_USERNAME: ${WORDPRESS_USERNAME}
+      WORDPRESS_PASSWORD: ${WORDPRESS_PASSWORD}
+      WORDPRESS_EMAIL: ${WORDPRESS_EMAIL}
+      DOMAIN_URL: ${DOMAIN_URL}
     restart: always
 
 networks:

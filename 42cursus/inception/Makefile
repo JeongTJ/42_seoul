@@ -40,6 +40,14 @@ logs:
 	@ echo "[$@]"
 	docker-compose $(DOCKER_COMPOSE_FLAGS) logs $(CONT)
 
+down:
+	@ echo "[$@]"
+	docker-compose $(DOCKER_COMPOSE_FLAGS) down
+
+up:
+	@ echo "[$@]"
+	docker-compose $(DOCKER_COMPOSE_FLAGS) up -d
+
 re:
 	@ echo "[$@]"
 	make fclean
