@@ -1,0 +1,88 @@
+services:
+  mariadb:
+    init: true
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    image: mariadb:tajeong
+    container_name: mariadb
+    networks:
+      - docker-network
+    volumes:
+      - wordpress-database:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE_NAME: ${MYSQL_DATABASE_NAME}
+      MYSQL_USER_HOSTNAME: ${MYSQL_USER_HOSTNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USERNAME: ${MYSQL_USERNAME}
+    restart: always
+
+  nginx:
+    init: true
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    image: nginx:tajeong
+    container_name: nginx
+    networks:
+      - docker-network
+    ports:
+      - "443:443"
+    depends_on:
+      - wordpress
+    volumes:
+      - wordpress-website:${WORDPRESS_DIR}
+    environment:
+      WORDPRESS_DIR: ${WORDPRESS_DIR}
+    restart: always
+
+  wordpress:
+    init: true
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    image: wordpress:tajeong
+    container_name: wordpress
+    networks:
+      - docker-network
+    depends_on:
+      - mariadb
+    volumes:
+      - wordpress-website:${WORDPRESS_DIR}
+    environment:
+      MYSQL_USERNAME: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE_NAME: ${MYSQL_DATABASE_NAME}
+      MYSQL_HOSTNAME: ${MYSQL_HOSTNAME}
+      WORDPRESS_DIR: ${WORDPRESS_DIR}
+      WORDPRESS_ADMIN_USERNAME: ${WORDPRESS_ADMIN_USERNAME}
+      WORDPRESS_ADMIN_PASSWORD: ${WORDPRESS_ADMIN_PASSWORD}
+      WORDPRESS_ADMIN_EMAIL: ${WORDPRESS_ADMIN_EMAIL}
+      WORDPRESS_USERNAME: ${WORDPRESS_USERNAME}
+      WORDPRESS_PASSWORD: ${WORDPRESS_PASSWORD}
+      WORDPRESS_EMAIL: ${WORDPRESS_EMAIL}
+      DOMAIN_URL: ${DOMAIN_URL}
+    restart: always
+
+networks:
+  docker-network:
+    name: docker-network
+
+volumes:
+  wordpress-website:
+    name: wordpress-website
+    driver: local
+    driver_opts:
+      type: bind
+      o: bind,rw
+      # device: "/home/tajeong/data/wp"
+      device: /Users/jeongtaejun/Documents/develop/42project/42cursus/inception/home/tajeong/data/wp
+  wordpress-database:
+    name: wordpress-database
+    driver: local
+    driver_opts:
+      type: bind
+      o: bind,rw
+      # device: "/home/tajeong/data/db"
+      device: /Users/jeongtaejun/Documents/develop/42project/42cursus/inception/home/tajeong/data/db
+
