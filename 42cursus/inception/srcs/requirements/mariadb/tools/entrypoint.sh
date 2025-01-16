@@ -12,7 +12,6 @@ while ! mysqladmin ping --silent; do
     echo "Waiting for MySQL to start..."
     sleep 1
 done
-echo "MySQL is running!"
 
 mysql << EOF
 CREATE USER '$MYSQL_USERNAME'@'$MYSQL_USER_HOSTNAME' IDENTIFIED BY '$MYSQL_PASSWORD';
@@ -23,4 +22,4 @@ mysqladmin -u root -p shutdown
 
 fi
 
-mysqld 
+mysqld

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-TARGET_FILE="${WORDPRESS_DIR}/license.txt"
-
 if [ ! -f /etc/nginx/ssl/selfsigned.key ] || [ ! -f /etc/nginx/ssl/selfsigned.crt ]; then
 	openssl req \
 		-x509 \
